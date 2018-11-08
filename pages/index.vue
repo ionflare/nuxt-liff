@@ -1,6 +1,14 @@
 <template>
 
   <div>
+
+      <div>
+          <button onclick="getLocation()">Try GEOIP</button>
+
+                <p id="demo"></p>
+      </div>
+
+
     <h1>Hello world! nassss i i</h1>
 
       <div id="test"></div>
@@ -80,7 +88,8 @@ export default {
       //{  src: '/external.js'},
       //{  src: '/external2.js'},
       //{  src: 'https://d.line-scdn.net/liff/1.0/sdk.js'},
-      {  src: '/liff-starter.js'}
+      {  src: '/liff-starter.js'},
+      {  src: '/geoip.js'},
     ]
   }
 }
