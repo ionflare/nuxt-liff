@@ -8,7 +8,7 @@
                     <v-container>
                         <v-layer>
                             <v-flex sm6 md6>
-                                <v-btn id='getprofilebutton'>Show Profile Info</v-btn>
+                                <v-btn id='getprofilebutton' onclick="getprofile()">Show Profile Info</v-btn>
                             </v-flex>
                         </v-layer>
                         <v-layer>
