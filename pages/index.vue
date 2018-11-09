@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card height="700px" flat>
+        <v-card height="600px" flat>
             <div class="headline text-xs-center pa-5">
                 Active: {{ bottomNav }}
                 <div v-if="bottomNav== 'profile' ">
@@ -13,17 +13,17 @@
                         </v-layer>
                         <v-layer>
                             <v-flex sm6 md6>
-                                <v-img id='profilepicturediv' width=100 height=100></v-img>
+                                <div id='profilepicturediv'></div>
                             </v-flex>
                         </v-layer>
                         <v-layer>
                             <v-flex sm6 md6>
-                                 <div id="useridfield"></div>
+                                 <v-text id="useridfield"></v-text>
                             </v-flex>
                         </v-layer>
                         <v-layer>
                             <v-flex sm6 md6>
-                                 <div id="displaynamefield"></div>
+                                 <v-text id="displaynamefield"></v-text>
                             </v-flex>
                         </v-layer>
                         
