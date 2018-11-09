@@ -3,15 +3,50 @@
         <v-card height="700px" flat>
             <div class="headline text-xs-center pa-5">
                 Active: {{ bottomNav }}
-                <div v-if="bottomNav== 'recent' ">
-                  <v-container><v-layer>
-                         <Profile v-bind="getProp" />
-                     </v-layer></v-container>
+                <div v-if="bottomNav== 'profile' ">
+
+                    <v-container>
+                        <v-layer>
+                            <v-flex sm6 md6>
+                                <v-btn onclick="getprofilebutton()">Show Profile Info</v-btn>
+                            </v-flex>
+                        </v-layer>
+                        <v-layer>
+                            <v-flex sm6 md6>
+                                <v-img id='profilepicturediv' width=100 height=100></v-img>
+                            </v-flex>
+                        </v-layer>
+                        <v-layer>
+                            <v-flex sm6 md6>
+                                 <div id="useridfield"></div>
+                            </v-flex>
+                        </v-layer>
+                        <v-layer>
+                            <v-flex sm6 md6>
+                                 <div id="displaynamefield"></div>
+                            </v-flex>
+                        </v-layer>
+                        
+                    </v-container>
+                     
+
+
+
                 </div>
                 <div v-if="bottomNav== 'favorites' ">
-                    2222
+                    <v-container>
+                        <v-layer>
+                            <v-flex sm6 md6>
+                                 <v-btn onclick="getLocation()">Try GEOIP</v-btn>
+                            </v-flex>
+                             <v-flex sm6 md6>
+                                <v-text id="demo"></v-text>
+                            </v-flex>
+                        </v-layer>
+                    </v-container>
                 </div>
                 <div v-if="bottomNav== 'nearby' ">
+                    Choose Your Soul Mate
                       <v-container><v-layer>
                          <SwipeUser v-bind="getProp" />
                      </v-layer></v-container>
@@ -29,9 +64,9 @@
                 <v-btn
                 color="teal"
                 flat
-                value="recent"
+                value="profile"
                 >
-                <span>Recent</span>
+                <span>Profile</span>
                 <v-icon>history</v-icon>
                 </v-btn>
         
@@ -58,7 +93,7 @@
 </template>
 
 <script>
-import Profile from '~/components/Profile.vue';
+//import Profile from '~/components/Profile.vue';
 import SwipeUser from '~/components/SwipeUser.vue';
 
 export default {
@@ -72,10 +107,10 @@ export default {
     ]
   },
   data: () => ({
-    bottomNav: 'recent'
+    bottomNav: 'profile'
   }),
    components:{
-        Profile,SwipeUser
+        SwipeUser
   },
       computed:{
         getProp(){
