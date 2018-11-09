@@ -8,5 +8,5 @@ function getLocation() {
 }
 function showPosition(position) {
     document.getElementById("demo").textContent = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude; 
+    ", Longitude: " + position.coords.longitude; 
 }

@@ -8,7 +8,7 @@
                     <v-container>
                         <v-layer>
                             <v-flex sm6 md6>
-                                <v-btn onclick="getprofilebutton()">Show Profile Info</v-btn>
+                                <v-btn id='getprofilebutton'>Show Profile Info</v-btn>
                             </v-flex>
                         </v-layer>
                         <v-layer>
@@ -36,6 +36,9 @@
                 <div v-if="bottomNav== 'favorites' ">
                     <v-container>
                         <v-layer>
+                            <v-flex sm6 md6>
+                                 Show Your Current Position
+                            </v-flex>
                             <v-flex sm6 md6>
                                  <v-btn onclick="getLocation()">Try GEOIP</v-btn>
                             </v-flex>
