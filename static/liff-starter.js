@@ -5,7 +5,7 @@ window.onload = function (e) {
         initializeApp(data);
     });
     
-    alert("kapok wa");
+    alert("----test external javascript---");
 };
 
 function initializeApp(data) {
