@@ -1,11 +1,10 @@
 <template>
 
   <div>
-    <h1>Test Profile</h1>
-
       <div id="test"></div>
 
-
+        <v-btn id="getprofilebutton">Get Profile</v-btn>
+        <!--
       <div class="buttongroup">
         <div class="buttonrow">
             <v-btn id="openwindowbutton">Open Window</v-btn>
@@ -15,7 +14,9 @@
             <v-btn id="getprofilebutton">Get Profile</v-btn>
             <v-btn id="sendmessagebutton">Send Message</v-btn>
         </div>
-    </div>
+        </div>
+        -->
+    
 
     <div id="profileinfo">
         <h2>Profile</h2>
