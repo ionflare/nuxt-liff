@@ -1,9 +1,9 @@
 <template>
 
   <div>
-      <div id="test"></div>
+      
 
-        <v-btn id="getprofilebutton">Get Profile</v-btn>
+        
         <!--
       <div class="buttongroup">
         <div class="buttonrow">
@@ -20,7 +20,6 @@
 
     <div id="profileinfo">
         <h2>Profile</h2>
-        <a href="#" onclick="toggleProfileData()">Close Profile</a>
         <div id="profilepicturediv">
         </div>
         <table border="1">

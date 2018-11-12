@@ -5,13 +5,13 @@ window.onload = function (e) {
         initializeApp(data);
     });
     
-    alert("----test external javascript---");
+   // alert("----test external javascript---");
 };
 
 function initializeApp(data) {
 
     alert(profile.displayName);
-    document.getElementById('languagefield').textContent = data.language;
+   // document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
     document.getElementById('useridfield').textContent = data.context.userId;
     document.getElementById('utouidfield').textContent = data.context.utouId;
