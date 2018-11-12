@@ -8,25 +8,25 @@
       <v-tabs-slider color="yellow"></v-tabs-slider>
   
       <v-tab href="#tab-1">
-        Recents
-        <v-icon>phone</v-icon>
+        Profile
+        <v-icon>account_box</v-icon>
       </v-tab>
   
       <v-tab href="#tab-2">
-        Favorites
-        <v-icon>favorite</v-icon>
+        Test Location
+        <v-icon>location_on</v-icon>
       </v-tab>
   
       <v-tab href="#tab-3">
-        Nearby
-        <v-icon>account_box</v-icon>
+        Test Swipe
+        <v-icon>favorite</v-icon>
       </v-tab>
       
       <v-tab-item  id="tab-1"
         key="1">
          <v-card flat>
           <v-container><v-layer>
-                <Profile v-bind="getProp" />
+                <Profile />
          </v-layer></v-container>
         </v-card>
       </v-tab-item>
@@ -55,9 +55,9 @@
         key="3">
          <v-card flat>
             Choose Your Soul Mate
-                            <v-container><v-layer>
-                                <SwipeUser v-bind="getProp" />
-                            </v-layer></v-container>
+                <v-container><v-layer>
+                    <SwipeUser v-bind="getProp" />
+                </v-layer></v-container>
         </v-card>
       </v-tab-item>
 
@@ -96,7 +96,7 @@ export default {
         getProp(){
            
             return {
-               e1: 0
+               e1: 1
                 
             }
         }
