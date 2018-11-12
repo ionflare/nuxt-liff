@@ -14,6 +14,8 @@
                             -->
                             
                             <v-container>
+                                sss
+                                <p id='displaynamefield'>
                                 <v-layer>
                                     <v-flex sm6 md6>
                                         <div id='profilepicturediv'></div>
@@ -24,12 +26,13 @@
                                         <v-text id="useridfield"></v-text>
                                     </v-flex>
                                 </v-layer>
+                                <!--
                                 <v-layer>
                                     <v-flex sm6 md6>
                                         <v-text id="displaynamefield"></v-text>
                                     </v-flex>
                                 </v-layer>
-                                
+                                -->
                             </v-container>
                             
                         </div>
