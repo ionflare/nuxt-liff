@@ -7,11 +7,11 @@
                     <div class="headline text-xs-center pa-5">
                         Active: {{ bottomNav }}
                         <div v-if="bottomNav== 'profile' ">
-                            <!--
+                            
                              <v-container><v-layer>
                                 <Profile v-bind="getProp" />
                             </v-layer></v-container>
-                            -->
+                            
                             
                             <v-container>
                                 <!--
