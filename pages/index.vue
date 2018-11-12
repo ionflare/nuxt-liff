@@ -1,46 +1,40 @@
 <template>
+     <v-tabs
+      centered
+      color="cyan"
+      dark
+      icons-and-text
+    >
+      <v-tabs-slider color="yellow"></v-tabs-slider>
+  
+      <v-tab href="#tab-1">
+        Recents
+        <v-icon>phone</v-icon>
+      </v-tab>
+  
+      <v-tab href="#tab-2">
+        Favorites
+        <v-icon>favorite</v-icon>
+      </v-tab>
+  
+      <v-tab href="#tab-3">
+        Nearby
+        <v-icon>account_box</v-icon>
+      </v-tab>
+      
+      <v-tab-item  :id="tab-1"
+        :key="1">
+         <v-card flat>
+          <v-container><v-layer>
+                <Profile v-bind="getProp" />
+         </v-layer></v-container>
+        </v-card>
+      </v-tab-item>
 
-    <v-container fluid=true>
-        <v-layer>
-            <v-frame>
-                <v-card height="700px" flat>
-                    <div class="headline text-xs-center pa-5">
-                        Active: {{ bottomNav }}
-                        <div v-if="bottomNav== 'profile' ">
-                             <v-container><v-layer>
-                                <Profile v-bind="getProp" />
-                            </v-layer></v-container>
-                            <!--
-                            <v-container>
-                                <v-layer>
-                                    <v-flex sm6 md6>
-                                        <v-btn id='getprofilebutton' onclick="getprofile()">Show Profile Info</v-btn>
-                                    </v-flex>
-                                </v-layer>
-                                <v-layer>
-                                    <v-flex sm6 md6>
-                                        <div id='profilepicturediv'></div>
-                                    </v-flex>
-                                </v-layer>
-                                <v-layer>
-                                    <v-flex sm6 md6>
-                                        <v-text id="useridfield"></v-text>
-                                    </v-flex>
-                                </v-layer>
-                                <v-layer>
-                                    <v-flex sm6 md6>
-                                        <v-text id="displaynamefield"></v-text>
-                                    </v-flex>
-                                </v-layer>
-                                
-                            </v-container>
-                            -->
-
-
-
-                        </div>
-                        <div v-if="bottomNav== 'favorites' ">
-                            <v-container>
+      <v-tab-item  :id="tab-2"
+        :key="2">
+         <v-card flat>
+           <v-container>
                                 <v-layer>
                                     <v-flex sm6 md6>
                                         Show Your Current Position
@@ -53,54 +47,29 @@
                                     </v-flex>
                                 </v-layer>
                             </v-container>
-                        </div>
-                        <div v-if="bottomNav== 'nearby' ">
-                            Choose Your Soul Mate
+        </v-card>
+      </v-tab-item>
+
+
+        <v-tab-item  :id="tab-3"
+        :key="3">
+         <v-card flat>
+            Choose Your Soul Mate
                             <v-container><v-layer>
                                 <SwipeUser v-bind="getProp" />
                             </v-layer></v-container>
-                        </div>
+        </v-card>
+      </v-tab-item>
 
 
 
-                    </div>
-                    <v-bottom-nav
-                        :active.sync="bottomNav"
-                        :value="true"
-                        absolute
-                        color="transparent"
-                    >
-                        <v-btn
-                        color="teal"
-                        flat
-                        value="profile"
-                        >
-                        <span>Profile</span>
-                        <v-icon>history</v-icon>
-                        </v-btn>
-                
-                        <v-btn
-                        color="teal"
-                        flat
-                        value="favorites"
-                        >
-                        <span>Favorites</span>
-                        <v-icon>favorite</v-icon>
-                        </v-btn>
-                
-                        <v-btn
-                        color="teal"
-                        flat
-                        value="nearby"
-                        >
-                        <span>Nearby</span>
-                        <v-icon>place</v-icon>
-                        </v-btn>
-                    </v-bottom-nav>
-                </v-card>
-            </v-frame>
-        </v-layer>
-    </v-container>
+
+
+
+    </v-tabs>
+
+
+
 </template>
 
 <script>
