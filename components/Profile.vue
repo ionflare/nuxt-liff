@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <th>statusMessage</th>
-                <td id="statusmessagefield"></td>
+                <td id="displaynamefield"></td>
             </tr>
         </table>
     </div>
