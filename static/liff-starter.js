@@ -5,7 +5,7 @@ window.onload = function (e) {
         initializeApp(data);
     });
     
-    //alert("----test external javascript---");
+    alert("----test external javascript---");
 };
 
 function initializeApp(data) {
