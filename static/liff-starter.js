@@ -5,13 +5,13 @@ window.onload = function (e) {
         initializeApp(data);
     });
     
-   // alert("----test external javascript---");
+    alert("----test external javascript---");
 };
 
 function initializeApp(data) {
 
-    alert(profile.displayName);
-   // document.getElementById('languagefield').textContent = data.language;
+    
+    document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
     document.getElementById('useridfield').textContent = data.context.userId;
     document.getElementById('utouidfield').textContent = data.context.utouId;
@@ -20,18 +20,17 @@ function initializeApp(data) {
 
     //*****[overwrite]*****
     liff.getProfile().then(function (profile) {
-        alert(profile.displayName);
         document.getElementById('useridprofilefield').textContent = profile.userId;
         document.getElementById('displaynamefield').textContent = profile.displayName;
 
-        var profilePictureDiv = document.getElementById('profilepicturediv');
-        if (profilePictureDiv.firstElementChild) {
-            profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
-        }
-        var img = document.createElement('img');
-        img.src = profile.pictureUrl;
-        img.alt = "Profile Picture";
-        profilePictureDiv.appendChild(img);
+           var profilePictureDiv = document.getElementById('profilepicturediv');
+            if (profilePictureDiv.firstElementChild) {
+                profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
+            }
+            var img = document.createElement('img');
+            img.src = profile.pictureUrl;
+            img.alt = "Profile Picture";
+            profilePictureDiv.appendChild(img);
     });
     //
 
