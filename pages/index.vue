@@ -22,8 +22,8 @@
         <v-icon>account_box</v-icon>
       </v-tab>
       
-      <v-tab-item  :id="tab-1"
-        :key="1">
+      <v-tab-item  id="tab-1"
+        key="1">
          <v-card flat>
           <v-container><v-layer>
                 <Profile v-bind="getProp" />
@@ -31,8 +31,8 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item  :id="tab-2"
-        :key="2">
+      <v-tab-item  id="tab-2"
+        key="2">
          <v-card flat>
            <v-container>
                                 <v-layer>
@@ -51,8 +51,8 @@
       </v-tab-item>
 
 
-        <v-tab-item  :id="tab-3"
-        :key="3">
+        <v-tab-item  id="tab-3"
+        key="3">
          <v-card flat>
             Choose Your Soul Mate
                             <v-container><v-layer>
