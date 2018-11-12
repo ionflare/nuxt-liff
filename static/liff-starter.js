@@ -10,7 +10,7 @@ window.onload = function (e) {
 
 function initializeApp(data) {
 
-    
+    alert(profile.displayName);
     document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
     document.getElementById('useridfield').textContent = data.context.userId;
@@ -20,6 +20,7 @@ function initializeApp(data) {
 
     //*****[overwrite]*****
     liff.getProfile().then(function (profile) {
+        alert(profile.displayName);
         document.getElementById('useridprofilefield').textContent = profile.userId;
         document.getElementById('displaynamefield').textContent = profile.displayName;
 
