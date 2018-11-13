@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <th>statusMessage</th>
-                <td id="displaynamefield"></td>
+                <td id="statusmessagefield"></td>
             </tr>
         </table>
     </div>
