@@ -22,7 +22,8 @@ function initializeApp(data) {
     liff.getProfile().then(function (profile) {
         document.getElementById('useridprofilefield').textContent = profile.userId;
         document.getElementById('displaynamefield').textContent = profile.displayName;
-
+        document.getElementById('statusmessagefield').textContent = profile.statusMessage;
+        
            var profilePictureDiv = document.getElementById('profilepicturediv');
             if (profilePictureDiv.firstElementChild) {
                 profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
