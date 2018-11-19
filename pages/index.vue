@@ -7,8 +7,9 @@
     >
       <v-tabs-slider color="yellow"></v-tabs-slider>
   
-      <v-tab href="#tab-1">
-        Profile
+      <v-tab href="#tab-1" v-on:click="get_var()">
+        
+        Profile {{t_var}}
         <v-icon>account_box</v-icon>
       </v-tab>
   
@@ -17,7 +18,7 @@
         <v-icon>location_on</v-icon>
       </v-tab>
   
-      <v-tab href="#tab-3">
+      <v-tab href="#tab-3" >
         Test Swipe
         <v-icon>favorite</v-icon>
       </v-tab>
@@ -86,20 +87,43 @@ export default {
       {  src: '/geoip.js'},
     ]
   },
+  
   data: () => ({
+    t_var : '',
     bottomNav: 'profile'
   }),
+  
+ /*
+  data: {
+    t_var : 'kuy',
+    bottomNav: 'profile'
+  },
+  */
    components:{
         Profile,SwipeUser
   },
-      computed:{
+  computed:{
         getProp(){
            
             return {
                e1: 1
                 
             }
-        }
+        },
     },
+    methods : {
+       get_var(){
+         //alert(document.getElementById('testVar').textContent);
+           this.t_var = document.getElementById('displaynamefield').textContent
+           alert(this.t_var);
+           //alert(document.getElementById('testVar').textContent);
+           /*
+            return {
+                t_var : document.getElementById('displaynamefield').textContent
+                
+            }
+            */
+        }
+    }
 }
 </script>

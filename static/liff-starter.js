@@ -1,11 +1,20 @@
 
 window.onload = function (e) {
+    //document.getElementById('testVar').textContent = "waw555";
     
     liff.init(function (data) {
         initializeApp(data);
     });
     
+    //xhttp.open("POST", "demo_post.asp", true);
+    //xhttp.open("POST", "http://localhost:3000/api/testpost", true);
+    
     alert("----test external javascript---");
+    /*
+    xhttp.open("get", "http://localhost:3000/api/testget", true);
+    xhttp.send();
+    */
+ 
 };
 
 function initializeApp(data) {

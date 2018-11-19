@@ -19,10 +19,17 @@
     
 
     <div id="profileinfo">
+        <!-- <v-text :model="this.$store.current_user"/> -->
+        {{$store.current_user}} 
         <h2>Profile</h2>
-        <div id="profilepicturediv">
+        <div id="profilepicturediv" >
         </div>
         <table border="1">
+            
+            <tr>
+                <th>testVar</th>
+                <td id="testVar"></td>
+            </tr>
             <tr>
                 <th>userId</th>
                 <td id="useridprofilefield"></td>
@@ -70,3 +77,9 @@
   
   </div>
 </template>
+
+<script>
+export default {
+    
+}
+</script>

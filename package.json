@@ -15,6 +15,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/vuetify": "^0.4.3",
-    "nuxt": "^2.2.0"
+    "mongoose": "^5.3.12",
+    "nuxt": "^2.2.0",
+    "vuex": "^3.0.1"
   }
 }
