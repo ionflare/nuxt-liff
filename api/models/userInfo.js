@@ -14,15 +14,7 @@ var User_Schema = new mongoose.Schema({
         minlength: 1,
         trim: true,
     },
-    hash: {
-        type: String,
-        required: false,
-        trim: true
-    },
-    salt:{
-        type: String,
-        required: false,
-    },
+
     firstname:{
         type: String,
 
@@ -31,15 +23,8 @@ var User_Schema = new mongoose.Schema({
          type: String,
 
     },
-    email:{
-         type: String,
-    },
-    tel:{
-         type: String,
-    },
     displayName:{
         type: String,
-       
     },
     address:{
         type: String,
@@ -73,7 +58,10 @@ var User_Schema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    
+    lastLocation: {
+        type: Date,
+        default: null
+    },
     lastUpdate: {
         type: Date,
         default: null

@@ -1,82 +1,73 @@
 <template>
-     <v-tabs
-      centered
-      color="cyan"
-      dark
-      icons-and-text
-    >
-      <v-tabs-slider color="yellow"></v-tabs-slider>
-  
-      <v-tab href="#tab-1" v-on:click="get_var()">
-        
-        Profile {{t_var}}
-        <v-icon>account_box</v-icon>
-      </v-tab>
-  
-      <v-tab href="#tab-2">
-        Test Location
-        <v-icon>location_on</v-icon>
-      </v-tab>
-  
-      <v-tab href="#tab-3" >
-        Test Swipe
-        <v-icon>favorite</v-icon>
-      </v-tab>
+  <v-app id="inspire">
+    <v-container>
       
-      <v-tab-item  id="tab-1"
-        key="1">
-         <v-card flat>
-          <v-container><v-layer>
-                <Profile />
-         </v-layer></v-container>
-        </v-card>
-      </v-tab-item>
+      <v-layout row>
+        <v-tabs
+          centered
+          color="cyan"
+          dark
+          icons-and-text>
+          <v-tabs-slider color="yellow"></v-tabs-slider>
+      
+          <v-tab href="#tab-1">
+            
+            Profile
+            <v-icon>account_box</v-icon>
+          </v-tab>
+      
+          <v-tab href="#tab-2">
+            Setting
+            <v-icon>settings</v-icon>
+          </v-tab>
+      
+          <v-tab href="#tab-3" >
+            Test Swipe
+            <v-icon>favorite</v-icon>
+          </v-tab>
 
-      <v-tab-item  id="tab-2"
-        key="2">
-         <v-card flat>
-           <v-container>
-                                <v-layer>
-                                    <v-flex sm6 md6>
-                                        Show Your Current Position
-                                    </v-flex>
-                                    <v-flex sm6 md6>
-                                        <v-btn onclick="getLocation()">Try GEOIP</v-btn>
-                                    </v-flex>
-                                    <v-flex sm6 md6>
-                                        <v-text id="demo"></v-text>
-                                    </v-flex>
-                                </v-layer>
-                            </v-container>
-        </v-card>
-      </v-tab-item>
+           <v-tab href="#tab-4" >
+            Friends
+            <v-icon>location_on</v-icon>
+          </v-tab>
+          
+          <v-tab-item  id="tab-1"
+            key="1">
+            <Profile />
+          </v-tab-item>
 
-
-        <v-tab-item  id="tab-3"
-        key="3">
-         <v-card flat>
-            Choose Your Soul Mate
-                <v-container><v-layer>
-                    <SwipeUser v-bind="getProp" />
-                </v-layer></v-container>
-        </v-card>
-      </v-tab-item>
-
-
-
-
+          <v-tab-item  id="tab-2"
+            key="2">
+            
+              <Settings />
+                
+          </v-tab-item>
 
 
-    </v-tabs>
+            <v-tab-item  id="tab-3"
+            key="3">
+              <SwipeUser />
+          </v-tab-item>
 
+            <v-tab-item  id="tab-4"
+            key="4">
+             <Mailbox />
+          </v-tab-item>
 
+      </v-tabs>
 
+      </v-layout>
+      
+
+    </v-container>
+  </v-app>
 </template>
 
 <script>
 import Profile from '~/components/Profile.vue';
 import SwipeUser from '~/components/SwipeUser.vue';
-
+import Settings from '~/components/Settings.vue';
+import Mailbox from '~/components/Mailbox.vue';
 export default {
   head: {
     script: [
@@ -84,15 +75,18 @@ export default {
       //{  src: '/external2.js'},
       //{  src: 'https://d.line-scdn.net/liff/1.0/sdk.js'},
       {  src: '/liff-starter.js'},
-      {  src: '/geoip.js'},
+      //{  src: '/geoip.js'},
     ]
   },
   
   data: () => ({
     t_var : '',
-    bottomNav: 'profile'
+    bottomNav: 'profile',
+    
   }),
   
+
+
  /*
   data: {
     t_var : 'kuy',
@@ -100,8 +94,9 @@ export default {
   },
   */
    components:{
-        Profile,SwipeUser
+      Profile, SwipeUser, Settings, Mailbox
   },
+  
   computed:{
         getProp(){
            
@@ -110,12 +105,19 @@ export default {
                 
             }
         },
+        updateVar (){
+           
+             return {
+               t_var: 1
+                
+            }
+        },
     },
     methods : {
        get_var(){
          //alert(document.getElementById('testVar').textContent);
-           this.t_var = document.getElementById('displaynamefield').textContent
-           alert(this.t_var);
+           //this.t_var = document.getElementById('displaynamefield').textContent
+           alert(LiffVar);
            //alert(document.getElementById('testVar').textContent);
            /*
             return {
@@ -124,6 +126,13 @@ export default {
             }
             */
         }
-    }
+    },
+    asyncData(context){
+   
+    return { 
+        t_var : 'LiffVar'
+      }
+  
+  }
 }
 </script>

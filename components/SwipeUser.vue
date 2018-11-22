@@ -84,6 +84,10 @@
 export default {
   //props: ['description', 'image', 'shopName', 'url', 'color', 'thumbnail']
   //prop: ['title', 'shopName', 'color']
-  props: ['e1']
+  //props: ['e1'],
+
+   data: () => ({
+     e1:0
+  }),
 }
 </script>

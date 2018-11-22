@@ -1,25 +1,44 @@
 
+var language = '';
+var viewType = '';
+var utouId = '';
+var roomId = '';
+
+var userId = '';
+var displayName = '';
+var pictureUrl = '';
+var statusMessage = '';
+var LiffVar = 'dsfds';
+
+
 window.onload = function (e) {
     //document.getElementById('testVar').textContent = "waw555";
     
     liff.init(function (data) {
         initializeApp(data);
     });
-    
-    //xhttp.open("POST", "demo_post.asp", true);
-    //xhttp.open("POST", "http://localhost:3000/api/testpost", true);
-    
-    alert("----test external javascript---");
-    /*
-    xhttp.open("get", "http://localhost:3000/api/testget", true);
-    xhttp.send();
-    */
+    //alert("----test external javascript---");
  
 };
 
 function initializeApp(data) {
 
     
+    language = data.language;
+
+
+    liff.getProfile().then(function (profile) {
+        userId = profile.userId;
+        displayName = profile.displayName;
+        statusMessage = profile.statusMessage;
+        pictureUrl =  profile.pictureUrl;
+           
+    });
+
+
+
+
+    /*
     document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
     document.getElementById('useridfield').textContent = data.context.userId;
@@ -44,7 +63,7 @@ function initializeApp(data) {
     });
     //
 
-
+    
     // openWindow call
     document.getElementById('openwindowbutton').addEventListener('click', function () {
         liff.openWindow({
@@ -94,10 +113,10 @@ function initializeApp(data) {
             window.alert("Error getting profile: " + error);
         });
     });
-
+    */
 
 }
-
+/*
 function toggleProfileData() {
     var elem = document.getElementById('profileinfo');
     if (elem.offsetWidth > 0 && elem.offsetHeight > 0) {
@@ -106,3 +125,4 @@ function toggleProfileData() {
         elem.style.display = "block";
     }
 }
+*/

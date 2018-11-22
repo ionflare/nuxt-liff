@@ -1,7 +1,18 @@
 <template>
 
   <div>
-      
+displayName:
+{{getDisplayName}}
+<br>
+userId:
+{{getID}}
+<br>
+PictureURL:
+{{GetPictureURL}}
+<br>
+statusMessage
+{{GetstatusMessage}}
+
 
         
         <!--
@@ -15,11 +26,11 @@
             <v-btn id="sendmessagebutton">Send Message</v-btn>
         </div>
         </div>
-        -->
+        
     
 
     <div id="profileinfo">
-        <!-- <v-text :model="this.$store.current_user"/> -->
+      
         {{$store.current_user}} 
         <h2>Profile</h2>
         <div id="profilepicturediv" >
@@ -74,12 +85,46 @@
             </tr>
         </table>
     </div>
-  
+  -->
   </div>
+
 </template>
 
 <script>
 export default {
+    methods :{
+        getExternalVar(){
+            if(typeof LiffVar !== 'undefined')
+            {
+                return LiffVar;
+            }
+        }
+    },
+    computed: {
+        
+        getID: function(){
+            if(typeof userId !== 'undefined')
+            { return userId; }
+        },
+        getDisplayName: function(){
+            if(typeof displayName !== 'undefined')
+            { return displayName; }
+            
+        },
+        GetPictureURL: function(){
+            if(typeof pictureUrl !== 'undefined')
+            { return pictureUrl; }
+        },
+        GetstatusMessage: function(){
+            if(typeof statusMessage !== 'undefined')
+            { return statusMessage; }
+        }
+        
+    }
+    
+
+    
+    
     
 }
 </script>
