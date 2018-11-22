@@ -104,10 +104,11 @@ export default {
     },
     computed: {
          getID: function(){
-            var element =  document.getElementById('displaynamefield');
-            if (typeof(element) != 'undefined' && element != null)
+             
+            //var element =  document.getElementById('displaynamefield');
+            if (typeof userId !== 'undefined')
             {
-                return element.textContent;
+                return document.getElementById('useridprofilefield').textContent;
             }
         },
         getDisplayName: function(){
