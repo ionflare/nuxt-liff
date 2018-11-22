@@ -108,7 +108,7 @@ export default {
             //var element =  document.getElementById('displaynamefield');
             if (typeof userId !== 'undefined')
             {
-                return document.getElementById('useridprofilefield').textContent;
+                return userId;
             }
         },
         getDisplayName: function(){

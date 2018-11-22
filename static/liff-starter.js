@@ -31,7 +31,7 @@ function initializeApp(data) {
     document.getElementById('utouidfield').textContent = data.context.utouId;
     document.getElementById('roomidfield').textContent = data.context.roomId;
     document.getElementById('groupidfield').textContent = data.context.groupId;
-
+    userId = document.getElementById('useridfield').textContent;
 
     liff.getProfile().then(function (profile) {
 
@@ -50,7 +50,7 @@ function initializeApp(data) {
 
 
 
-        userId = profile.userId;
+        //userId = profile.userId;
         displayName = profile.displayName;
         statusMessage = profile.statusMessage;
         pictureUrl =  profile.pictureUrl;
