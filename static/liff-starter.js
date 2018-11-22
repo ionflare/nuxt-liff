@@ -25,9 +25,31 @@ function initializeApp(data) {
 
     
     language = data.language;
+    document.getElementById('languagefield').textContent = data.language;
+    document.getElementById('viewtypefield').textContent = data.context.viewType;
+    document.getElementById('useridfield').textContent = data.context.userId;
+    document.getElementById('utouidfield').textContent = data.context.utouId;
+    document.getElementById('roomidfield').textContent = data.context.roomId;
+    document.getElementById('groupidfield').textContent = data.context.groupId;
 
 
     liff.getProfile().then(function (profile) {
+
+        document.getElementById('useridprofilefield').textContent = profile.userId;
+        document.getElementById('displaynamefield').textContent = profile.displayName;
+        document.getElementById('statusmessagefield').textContent = profile.statusMessage;
+        
+           var profilePictureDiv = document.getElementById('profilepicturediv');
+            if (profilePictureDiv.firstElementChild) {
+                profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
+            }
+            var img = document.createElement('img');
+            img.src = profile.pictureUrl;
+            img.alt = "Profile Picture";
+            profilePictureDiv.appendChild(img);
+
+
+
         userId = profile.userId;
         displayName = profile.displayName;
         statusMessage = profile.statusMessage;
@@ -39,12 +61,7 @@ function initializeApp(data) {
 
 
     /*
-    document.getElementById('languagefield').textContent = data.language;
-    document.getElementById('viewtypefield').textContent = data.context.viewType;
-    document.getElementById('useridfield').textContent = data.context.userId;
-    document.getElementById('utouidfield').textContent = data.context.utouId;
-    document.getElementById('roomidfield').textContent = data.context.roomId;
-    document.getElementById('groupidfield').textContent = data.context.groupId;
+    
 
     //*****[overwrite]*****
     liff.getProfile().then(function (profile) {

@@ -17,7 +17,7 @@ language:
 {{Getlanguage}}
 
         
-        <!--
+        
       <div class="buttongroup">
         <div class="buttonrow">
             <v-btn id="openwindowbutton">Open Window</v-btn>
@@ -87,7 +87,7 @@ language:
             </tr>
         </table>
     </div>
-  -->
+  
   </div>
 
 </template>
