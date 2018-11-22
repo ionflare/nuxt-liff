@@ -7,7 +7,7 @@ var roomId = '';
 var userId = '';
 var displayName = '';
 var pictureUrl = '';
-var statusMessage = '';
+var statusMessage = 'sss';
 var LiffVar = 'dsfds';
 
 

@@ -10,9 +10,11 @@ userId:
 PictureURL:
 {{GetPictureURL}}
 <br>
-statusMessage
+statusMessage:
 {{GetstatusMessage}}
-
+<br>
+language:
+{{Getlanguage}}
 
         
         <!--
@@ -118,8 +120,11 @@ export default {
         GetstatusMessage: function(){
             if(typeof statusMessage !== 'undefined')
             { return statusMessage; }
+        },
+        Getlanguage: function(){
+            if(typeof language !== 'undefined')
+            { return language; }
         }
-        
     }
     
 
