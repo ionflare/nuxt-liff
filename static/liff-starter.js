@@ -4,7 +4,8 @@ var viewType = '';
 var utouId = '';
 var roomId = '';
 
-var userId = document.getElementById('useridfield');
+//var userId = document.getElementById('useridfield');
+var userId = '';
 var displayName = '';
 var pictureUrl = '';
 var statusMessage = 'sss';
@@ -31,7 +32,7 @@ function initializeApp(data) {
     document.getElementById('utouidfield').textContent = data.context.utouId;
     document.getElementById('roomidfield').textContent = data.context.roomId;
     document.getElementById('groupidfield').textContent = data.context.groupId;
-    //userId = document.getElementById('useridfield').textContent;
+    userId = document.getElementById('useridfield').textContent;
 
     liff.getProfile().then(function (profile) {
 

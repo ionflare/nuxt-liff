@@ -106,9 +106,15 @@ export default {
          getID: function(){
              
             //var element =  document.getElementById('displaynamefield');
+            /*
             if (typeof userId !== 'undefined' && userId != null)
             {
                 return userId.textContent;
+            }
+            */
+            if (typeof userId !== 'undefined' && userId != null)
+            {
+                return userId;
             }
         },
         getDisplayName: function(){
