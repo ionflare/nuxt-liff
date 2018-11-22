@@ -25,15 +25,15 @@ window.onload = function (e) {
 function initializeApp(data) {
 
     
-    language = data.language;
+    //language = data.language;
     document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
     document.getElementById('useridfield').textContent = data.context.userId;
     document.getElementById('utouidfield').textContent = data.context.utouId;
     document.getElementById('roomidfield').textContent = data.context.roomId;
     document.getElementById('groupidfield').textContent = data.context.groupId;
-    userId = document.getElementById('useridfield').textContent;
-
+    //userId = document.getElementById('useridfield').textContent;
+    //userId = "sdadsadsdsad";
     liff.getProfile().then(function (profile) {
 
         document.getElementById('useridprofilefield').textContent = profile.userId;
@@ -52,7 +52,7 @@ function initializeApp(data) {
 
 
         //userId = profile.userId;
-        displayName = profile.displayName;
+        //displayName = "sdfdsfd";
         statusMessage = profile.statusMessage;
         pictureUrl =  profile.pictureUrl;
            

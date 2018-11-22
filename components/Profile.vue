@@ -16,7 +16,7 @@ statusMessage:
 language:
 {{Getlanguage}}
 
-        
+    <v-btn @click="alertProfile()" label="test" />    
         
       <div class="buttongroup">
         <div class="buttonrow">
@@ -45,7 +45,7 @@ language:
             </tr>
             <tr>
                 <th>userId</th>
-                <td id="useridprofilefield">dsfds</td>
+                <td id="useridprofilefield"></td>
             </tr>
             <tr>
                 <th>displayName</th>
@@ -96,7 +96,7 @@ language:
 export default {
    
     data: {
-     waw: ''
+     waw: 'xxxx'
     },
 
     methods :{
@@ -104,7 +104,11 @@ export default {
             if(typeof LiffVar !== 'undefined')
             {
                 return LiffVar;
+                
             }
+        },
+         alertProfile(){
+            alert(document.getElementById('displaynamefield').textContent);
         },
        
             
@@ -123,7 +127,7 @@ export default {
             
             if (typeof userId !== 'undefined' && userId != null)
             {
-                this.waw = document.getElementById('useridfield').textContent;
+                //this.waw = document.getElementById('useridfield').textContent;
                 return  this.waw;
             }
         },
