@@ -103,10 +103,12 @@ export default {
         }
     },
     computed: {
-        
-        getID: function(){
-            if(typeof userId !== 'undefined')
-            { return userId; }
+         getID: function(){
+            var element =  document.getElementById('displaynamefield');
+            if (typeof(element) != 'undefined' && element != null)
+            {
+                return element.textContent;
+            }
         },
         getDisplayName: function(){
             if(typeof displayName !== 'undefined')
@@ -125,6 +127,7 @@ export default {
             if(typeof language !== 'undefined')
             { return language; }
         }
+        
     }
     
 
