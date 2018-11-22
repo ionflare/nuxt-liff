@@ -1,6 +1,8 @@
 <template>
 
   <div>
+VUE FORM
+<br>      
 displayName:
 {{getDisplayName}}
 <br>
@@ -15,9 +17,11 @@ statusMessage:
 <br>
 language:
 {{Getlanguage}}
-
-    <v-btn @click="alertProfile()" label="test" />    
-        
+<br>
+     <v-btn color="success" @click="alertProfile()">
+             Test Alert From Nuxt
+    </v-btn>
+    <!--
       <div class="buttongroup">
         <div class="buttonrow">
             <v-btn id="openwindowbutton">Open Window</v-btn>
@@ -28,13 +32,12 @@ language:
             <v-btn id="sendmessagebutton">Send Message</v-btn>
         </div>
         </div>
-        
+    -->    
     
 
     <div id="profileinfo">
       
-        {{$store.current_user}} 
-        <h2>Profile</h2>
+        <h2>Profile (HTML FORM)</h2>
         <div id="profilepicturediv" >
         </div>
         <table border="1">
@@ -124,12 +127,13 @@ export default {
                 return userId.textContent;
             }
             */
-            
-            if (typeof userId !== 'undefined' && userId != null)
+            /*
+            if (document.body.contains("displaynamefield"))
             {
                 //this.waw = document.getElementById('useridfield').textContent;
-                return  this.waw;
+                return  document.getElementById('displaynamefield').textContent;
             }
+            */
         },
         
         getDisplayName: function(){
