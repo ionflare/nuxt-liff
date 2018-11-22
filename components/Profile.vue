@@ -45,7 +45,7 @@ language:
             </tr>
             <tr>
                 <th>userId</th>
-                <td id="useridprofilefield"></td>
+                <td id="useridprofilefield">dsfds</td>
             </tr>
             <tr>
                 <th>displayName</th>
@@ -94,15 +94,23 @@ language:
 
 <script>
 export default {
+   
+    data: {
+     waw: ''
+    },
+
     methods :{
         getExternalVar(){
             if(typeof LiffVar !== 'undefined')
             {
                 return LiffVar;
             }
-        }
+        },
+       
+            
     },
     computed: {
+        
          getID: function(){
              
             //var element =  document.getElementById('displaynamefield');
@@ -112,11 +120,14 @@ export default {
                 return userId.textContent;
             }
             */
+            
             if (typeof userId !== 'undefined' && userId != null)
             {
-                return  document.getElementById('useridfield').textContent;
+                this.waw = document.getElementById('useridfield').textContent;
+                return  this.waw;
             }
         },
+        
         getDisplayName: function(){
             if(typeof displayName !== 'undefined')
             { return displayName; }
