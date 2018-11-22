@@ -114,7 +114,7 @@ export default {
             */
             if (typeof userId !== 'undefined' && userId != null)
             {
-                return userId;
+                return  document.getElementById('useridfield').textContent;
             }
         },
         getDisplayName: function(){
