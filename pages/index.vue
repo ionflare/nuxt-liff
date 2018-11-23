@@ -7,10 +7,12 @@
           <div class="text-xs-center">
             <div>
               GREETING / ANNOUNCEMENT 
+              Location = {{$store.state.user_latitude}} , {{$store.state.user_longitude}}
+              user : {{$store.state.current_user}},
             </div>
             <div>
               <v-btn small color="primary" dark  @click="alertProfile()">
-                 GO TO DATING APP {{$store.state.current_user}}
+                 GO TO DATING APP 
                 </v-btn>
                  <v-btn small color="primary" dark  @click="alertLocation()">
                  Location {{$store.state.user_latitude}} , {{$store.state.user_longitude}}
