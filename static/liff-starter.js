@@ -14,11 +14,11 @@ var LiffVar = 'dsfds';
 
 window.onload = function (e) {
     //document.getElementById('testVar').textContent = "waw555";
-    getLocation();
+    
     liff.init(function (data) {
         initializeApp(data);
     });
-    
+    getLocation();
     //alert("----test external javascript---");
  
 };
@@ -54,8 +54,8 @@ function initializeApp(data) {
 
         //userId = profile.userId;
         //displayName = "sdfdsfd";
-        statusMessage = profile.statusMessage;
-        pictureUrl =  profile.pictureUrl;
+        //statusMessage = profile.statusMessage;
+        //pictureUrl =  profile.pictureUrl;
            
     });
 

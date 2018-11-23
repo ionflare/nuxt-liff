@@ -7,8 +7,8 @@
           <div class="text-xs-center">
             <div>
               GREETING / ANNOUNCEMENT 
-              Location = {{$store.state.user_latitude}} , {{$store.state.user_longitude}}
-              user : {{$store.state.current_user}},
+              Location = {{$store.state.currentUser.latitude}} , {{$store.state.currentUser.longitude}}
+              user : {{$store.state.currentUser.displayName }},
             </div>
             <div>
               <v-btn small color="primary" dark  @click="alertProfile()">
@@ -90,7 +90,7 @@ export default {
     script: [
    
       {  src: '/liff-starter.js'},
-      {  src: '/geoip.js'},
+      //{  src: '/geoip.js'},
     ]
   },
   
@@ -106,9 +106,12 @@ export default {
         alertProfile(){
           //alert(document.getElementById('displaynamefield').textContent);
           //this.$store.state.current_user.user_id
-          this.$store.state.current_user = document.getElementById('displaynamefield').textContent;
-           this.$store.state.user_latitude = document.getElementById('latitude').textContent;
-          this.$store.state.user_longitude = document.getElementById('longitude').textContent;
+           this.$store.state.currentUser.displayName = document.getElementById('displaynamefield').textContent;
+           this.$store.state.currentUser.lineId = document.getElementById('useridprofilefield').textContent;
+           this.$store.state.currentUser.pictureUrl = document.getElementById('profilepicturediv').src;
+           this.$store.state.currentUser.statusMessege = document.getElementById('statusmessagefield').textContent;
+           this.$store.state.currentUser.latitude = document.getElementById('latitude').textContent;
+           this.$store.state.currentUser.longitude = document.getElementById('longitude').textContent;
         },
        
     }
