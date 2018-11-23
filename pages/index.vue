@@ -1,138 +1,128 @@
 <template>
-  <v-app id="inspire">
-    <v-container>
+  <v-app>
+    <v-container fluid class="pa-0">
       
-      <v-layout row>
-        <v-tabs
-          centered
-          color="cyan"
-          dark
-          icons-and-text>
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-      
-          <v-tab href="#tab-1">
-            
-            Profile
-            <v-icon>account_box</v-icon>
-          </v-tab>
-      
-          <v-tab href="#tab-2">
-            Setting
-            <v-icon>settings</v-icon>
-          </v-tab>
-      
-          <v-tab href="#tab-3" >
-            Test Swipe
-            <v-icon>favorite</v-icon>
-          </v-tab>
-
-           <v-tab href="#tab-4" >
-            Friends
-            <v-icon>location_on</v-icon>
-          </v-tab>
-          
-          <v-tab-item  id="tab-1"
-            key="1">
-            <Profile />
-          </v-tab-item>
-
-          <v-tab-item  id="tab-2"
-            key="2">
-            
-              <Settings />
-                
-          </v-tab-item>
-
-
-            <v-tab-item  id="tab-3"
-            key="3">
-              <SwipeUser />
-          </v-tab-item>
-
-            <v-tab-item  id="tab-4"
-            key="4">
-             <Mailbox />
-          </v-tab-item>
-
-      </v-tabs>
-
+      <v-layout row wrap align-center>
+        <v-flex xs12 sm6>
+          <div class="text-xs-center">
+            <div>
+              GREETING / ANNOUNCEMENT 
+            </div>
+            <div>
+              <v-btn small color="primary" dark  @click="alertProfile()">
+                 GO TO DATING APP {{$store.state.current_user}}
+                </v-btn>
+                 <v-btn small color="primary" dark  @click="alertLocation()">
+                 Location {{$store.state.user_latitude}} , {{$store.state.user_longitude}}
+                </v-btn>
+            </div>
+          </div>
+        </v-flex>
       </v-layout>
       
 
     </v-container>
+    <div>
+      <div id="profileinfo">
+      
+        <h2>Profile (HTML FORM)</h2>
+        <div id="profilepicturediv" >
+        </div>
+        <table border="1">
+            
+            <tr>
+                <th>testVar</th>
+                <td id="testVar"></td>
+            </tr>
+            <tr>
+                <th>userId</th>
+                <td id="useridprofilefield"></td>
+            </tr>
+            <tr>
+                <th>displayName</th>
+                <td id="displaynamefield"></td>
+            </tr>
+            <tr>
+                <th>statusMessage</th>
+                <td id="statusmessagefield"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="liffdata">
+        <h2>LIFF Data</h2>
+        <table border="1">
+            <tr>
+                <th>language</th>
+                <td id="languagefield"></td>
+            </tr>
+            <tr>
+                <th>context.viewType</th>
+                <td id="viewtypefield"></td>
+            </tr>
+            <tr>
+                <th>context.userId</th>
+                <td id="useridfield"></td>
+            </tr>
+            <tr>
+                <th>context.utouId</th>
+                <td id="utouidfield"></td>
+            </tr>
+            <tr>
+                <th>context.roomId</th>
+                <td id="roomidfield"></td>
+            </tr>
+            <tr>
+                <th>context.groupId</th>
+                <td id="groupidfield"></td>
+            </tr>
+        </table>
+    </div>
+    </div>
   </v-app>
 </template>
 
 <script>
-import Profile from '~/components/Profile.vue';
-import SwipeUser from '~/components/SwipeUser.vue';
-import Settings from '~/components/Settings.vue';
-import Mailbox from '~/components/Mailbox.vue';
+
 export default {
   head: {
     script: [
-      //{  src: '/external.js'},
-      //{  src: '/external2.js'},
-      //{  src: 'https://d.line-scdn.net/liff/1.0/sdk.js'},
+   
       {  src: '/liff-starter.js'},
       //{  src: '/geoip.js'},
     ]
   },
   
-  data: () => ({
-    t_var : '',
-    bottomNav: 'profile',
-    
-  }),
+  data: () => ({  
   
+  }),
 
-
- /*
-  data: {
-    t_var : 'kuy',
-    bottomNav: 'profile'
-  },
-  */
-   components:{
-      Profile, SwipeUser, Settings, Mailbox
-  },
+  
   
   computed:{
-        getProp(){
-           
-            return {
-               e1: 1
-                
-            }
-        },
-        updateVar (){
-           
-             return {
-               t_var: 1
-                
-            }
-        },
     },
     methods : {
-       get_var(){
-         //alert(document.getElementById('testVar').textContent);
-           //this.t_var = document.getElementById('displaynamefield').textContent
-           alert(LiffVar);
-           //alert(document.getElementById('testVar').textContent);
-           /*
-            return {
-                t_var : document.getElementById('displaynamefield').textContent
-                
-            }
-            */
-        }
-    },
-    asyncData(context){
-   
-    return { 
-        t_var : 'LiffVar'
+        alertProfile(){
+          //alert(document.getElementById('displaynamefield').textContent);
+          //this.$store.state.current_user.user_id
+          this.$store.state.current_user = document.getElementById('displaynamefield').textContent;
+        },
+        alertLocation(){
+           //alert(document.getElementById('displaynamefield').textContent);
+            if (navigator.geolocation) {
+              navigator.geolocation.watchPosition(this.showPosition);
+              
+            } 
+            
+        },
+        showPosition(position) {
+          /*
+          document.getElementById("demo").textContent = "Latitude: " + position.coords.latitude + 
+        ", Longitude: " + position.coords.longitude; 
+        */
+        this.$store.state.user_latitude = position.coords.latitude;
+        this.$store.state.user_longitude = position.coords.longitude;
       }
-  
-  }
+    }
 }
 </script>

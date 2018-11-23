@@ -3,7 +3,9 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      current_user : "testUser",
+      current_user : null,
+      user_lotatude : null,
+      user_longitude : null,
     },
     mutations: {
       init_user (state,payload) {
