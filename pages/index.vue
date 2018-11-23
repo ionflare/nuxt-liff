@@ -14,9 +14,7 @@
               <v-btn small color="primary" dark  @click="alertProfile()">
                  GO TO DATING APP 
                 </v-btn>
-                 <v-btn small color="primary" dark  @click="alertLocation()">
-                 Location {{$store.state.user_latitude}} , {{$store.state.user_longitude}}
-                </v-btn>
+                
             </div>
           </div>
         </v-flex>
@@ -26,7 +24,8 @@
     </v-container>
     <div>
       <div id="profileinfo">
-      
+        location = <div id="latitude"></div><div id="longitude"></div>
+        <br>
         <h2>Profile (HTML FORM)</h2>
         <div id="profilepicturediv" >
         </div>
@@ -91,7 +90,7 @@ export default {
     script: [
    
       {  src: '/liff-starter.js'},
-      //{  src: '/geoip.js'},
+      {  src: '/geoip.js'},
     ]
   },
   
@@ -108,23 +107,10 @@ export default {
           //alert(document.getElementById('displaynamefield').textContent);
           //this.$store.state.current_user.user_id
           this.$store.state.current_user = document.getElementById('displaynamefield').textContent;
+           this.$store.state.user_latitude = document.getElementById('latitude').textContent;
+          this.$store.state.user_longitude = document.getElementById('longitude').textContent;
         },
-        alertLocation(){
-           //alert(document.getElementById('displaynamefield').textContent);
-            if (navigator.geolocation) {
-              navigator.geolocation.watchPosition(this.showPosition);
-              
-            } 
-            
-        },
-        showPosition(position) {
-          /*
-          document.getElementById("demo").textContent = "Latitude: " + position.coords.latitude + 
-        ", Longitude: " + position.coords.longitude; 
-        */
-        this.$store.state.user_latitude = position.coords.latitude;
-        this.$store.state.user_longitude = position.coords.longitude;
-      }
+       
     }
 }
 </script>
