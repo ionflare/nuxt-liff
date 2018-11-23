@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-container>
-      
+      {{$store.state.currentUser.longitude}}
       <v-layout row>
         <v-tabs
           centered
@@ -74,7 +74,7 @@ export default {
       //{  src: '/external.js'},
       //{  src: '/external2.js'},
       //{  src: 'https://d.line-scdn.net/liff/1.0/sdk.js'},
-      {  src: '/liff-starter.js'},
+      //{  src: '/liff-starter.js'},
       //{  src: '/geoip.js'},
     ]
   },
@@ -107,32 +107,12 @@ export default {
         },
         updateVar (){
            
-             return {
-               t_var: 1
-                
-            }
         },
     },
     methods : {
-       get_var(){
-         //alert(document.getElementById('testVar').textContent);
-           //this.t_var = document.getElementById('displaynamefield').textContent
-           alert(LiffVar);
-           //alert(document.getElementById('testVar').textContent);
-           /*
-            return {
-                t_var : document.getElementById('displaynamefield').textContent
-                
-            }
-            */
-        }
+      
     },
-    asyncData(context){
-   
-    return { 
-        t_var : 'LiffVar'
-      }
   
-  }
+  
 }
 </script>

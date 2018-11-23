@@ -98,10 +98,6 @@ export default {
   
   }),
 
-  
-  
-  computed:{
-    },
     methods : {
         alertProfile(){
           //alert(document.getElementById('displaynamefield').textContent);
@@ -112,6 +108,16 @@ export default {
            this.$store.state.currentUser.statusMessege = document.getElementById('statusmessagefield').textContent;
            this.$store.state.currentUser.latitude = document.getElementById('latitude').textContent;
            this.$store.state.currentUser.longitude = document.getElementById('longitude').textContent;
+
+          if((this.$store.state.currentUser.latitude != null) && (this.$store.state.currentUser.longitude != null))
+          {
+            location.href = "./main";
+            //alert("Please turn on your GPS");
+          }
+          else{
+            alert("Please turn on your GPS");
+          }
+
         },
        
     }

@@ -4,92 +4,23 @@
 VUE FORM
 <br>      
 displayName:
-{{getDisplayName}}
+{{$store.state.currentUser.displayName}}
 <br>
 userId:
-{{getID}}
+{{$store.state.currentUser.lineId}}
 <br>
 PictureURL:
-{{GetPictureURL}}
+{{$store.state.currentUser.pictureUrl}}
 <br>
 statusMessage:
-{{GetstatusMessage}}
+{{$store.state.currentUser.statusMessege}}
 <br>
-language:
-{{Getlanguage}}
+latitude:
+{{$store.state.currentUser.latitude}}
 <br>
-     <v-btn color="success" @click="alertProfile()">
-             Test Alert From Nuxt
-    </v-btn>
-    <!--
-      <div class="buttongroup">
-        <div class="buttonrow">
-            <v-btn id="openwindowbutton">Open Window</v-btn>
-            <v-btn id="closewindowbutton">Close Window</v-btn>
-        </div>
-        <div class="buttonrow">
-            <v-btn id="getprofilebutton">Get Profile</v-btn>
-            <v-btn id="sendmessagebutton">Send Message</v-btn>
-        </div>
-        </div>
-    -->    
-    
-
-    <div id="profileinfo">
-      
-        <h2>Profile (HTML FORM)</h2>
-        <div id="profilepicturediv" >
-        </div>
-        <table border="1">
-            
-            <tr>
-                <th>testVar</th>
-                <td id="testVar"></td>
-            </tr>
-            <tr>
-                <th>userId</th>
-                <td id="useridprofilefield"></td>
-            </tr>
-            <tr>
-                <th>displayName</th>
-                <td id="displaynamefield"></td>
-            </tr>
-            <tr>
-                <th>statusMessage</th>
-                <td id="statusmessagefield"></td>
-            </tr>
-        </table>
-    </div>
-
-    <div id="liffdata">
-        <h2>LIFF Data</h2>
-        <table border="1">
-            <tr>
-                <th>language</th>
-                <td id="languagefield"></td>
-            </tr>
-            <tr>
-                <th>context.viewType</th>
-                <td id="viewtypefield"></td>
-            </tr>
-            <tr>
-                <th>context.userId</th>
-                <td id="useridfield"></td>
-            </tr>
-            <tr>
-                <th>context.utouId</th>
-                <td id="utouidfield"></td>
-            </tr>
-            <tr>
-                <th>context.roomId</th>
-                <td id="roomidfield"></td>
-            </tr>
-            <tr>
-                <th>context.groupId</th>
-                <td id="groupidfield"></td>
-            </tr>
-        </table>
-    </div>
+longitude:
+{{$store.state.currentUser.longitude}}
+<br>
   
   </div>
 
@@ -98,67 +29,7 @@ language:
 <script>
 export default {
    
-    data: {
-     waw: 'xxxx'
-    },
+   
 
-    methods :{
-        getExternalVar(){
-            if(typeof LiffVar !== 'undefined')
-            {
-                return LiffVar;
-                
-            }
-        },
-         alertProfile(){
-            alert(document.getElementById('displaynamefield').textContent);
-        },
-       
-            
-    },
-    computed: {
-        
-         getID: function(){
-             
-            //var element =  document.getElementById('displaynamefield');
-            /*
-            if (typeof userId !== 'undefined' && userId != null)
-            {
-                return userId.textContent;
-            }
-            */
-            /*
-            if (document.body.contains("displaynamefield"))
-            {
-                //this.waw = document.getElementById('useridfield').textContent;
-                return  document.getElementById('displaynamefield').textContent;
-            }
-            */
-        },
-        
-        getDisplayName: function(){
-            if(typeof displayName !== 'undefined')
-            { return displayName; }
-            
-        },
-        GetPictureURL: function(){
-            if(typeof pictureUrl !== 'undefined')
-            { return pictureUrl; }
-        },
-        GetstatusMessage: function(){
-            if(typeof statusMessage !== 'undefined')
-            { return statusMessage; }
-        },
-        Getlanguage: function(){
-            if(typeof language !== 'undefined')
-            { return language; }
-        }
-        
-    }
-    
-
-    
-    
-    
 }
 </script>
