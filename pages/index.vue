@@ -33,13 +33,14 @@
         
           </div>
         </v-flex>
+         location = <div id="latitude"></div><div id="longitude"></div>
       </v-layout>
       
 
     </v-container>
     <div style="display: none;">
       <div id="profileinfo">
-        location = <div id="latitude"></div><div id="longitude"></div>
+       
         <br>
         <h2>Profile (HTML FORM)</h2>
         <div id="profilepicturediv" >
@@ -146,7 +147,7 @@ export default {
          async onWebLogin(context){
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
           //&& document.getElementById('useridprofilefield').textContent != "")
-          if(1)
+          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
           {
             try{
             let data = await this.$axios.$post('/api/app_login',
