@@ -52,4 +52,8 @@ else{
         '@nuxtjs/vuetify',
       
       ],
+      axios: {
+        // See https://github.com/nuxt-community/axios-module#options
+        baseURL: API_URL
+      },
  }
