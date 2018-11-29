@@ -1,8 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-container>
-      {{$store.state.kea}}
-      
+    <v-container>  
       <v-layout row>
         <v-tabs
           centered

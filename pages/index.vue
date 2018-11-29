@@ -2,27 +2,43 @@
   <v-app>
     <v-container fluid class="pa-0">
       
-      <v-layout row wrap align-center>
+        <v-layout justify-center>
         <v-flex xs12 sm6>
           <div class="text-xs-center">
+            
+            
+          
+            <v-card-title primary-title>
             <div>
-              GREETING / ANNOUNCEMENT 
-              Location = {{$store.state.currentUser.latitude}} , {{$store.state.currentUser.longitude}}
-              user : {{$store.state.currentUser.displayName }},
+              <h3 class="headline mb-0">GREETING / PROMOTION / ANNOUCMENT</h3>
+              <div>bla bla bla <br>Some advertisment here</div>
             </div>
-            <div>
-              <v-btn small color="primary" dark  @click="alertProfile()">
-                 GO TO DATING APP 
-                </v-btn>
-                
-            </div>
+          </v-card-title>
+            <v-card>
+                <v-img
+                     src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+
+                      height="400px"
+                ></v-img>
+            </v-card>
+            
+            <v-card-title primary-title>
+           
+             
+              <div>Patch change blah blah blah...</div>
+           
+          </v-card-title>
+            <v-btn  color="primary" dark  @click="onWebLogin()">GO TO DATING APP</v-btn>
+        
+        
+        
           </div>
         </v-flex>
       </v-layout>
       
 
     </v-container>
-    <div>
+    <div style="display: none;">
       <div id="profileinfo">
         location = <div id="latitude"></div><div id="longitude"></div>
         <br>
@@ -95,7 +111,7 @@ export default {
   },
   
   data: () => ({  
-  
+      
   }),
 
     methods : {
@@ -111,8 +127,8 @@ export default {
            this.$store.state.currentUser.latitude = document.getElementById('latitude').textContent;
            this.$store.state.currentUser.longitude = document.getElementById('longitude').textContent;
             */
-           this.$store.commit('init_user', '555xx');
-            location.href = "./main";
+           //this.$store.commit('init_user', '555xx');
+           //location.href = "./main";
 
 
 
@@ -128,6 +144,58 @@ export default {
           }
          */
         },
+         async onWebLogin(context){
+          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
+          && document.getElementById('useridprofilefield').textContent != "")
+          {
+            try{
+            let data = await this.$axios.$post('/api/app_login',
+            {
+                currentUser :
+                
+                {
+                'line_userId' : document.getElementById('useridprofilefield').textContent,
+                'line_displayName' : document.getElementById('displaynamefield').textContent,
+                'line_pictureUrl' : document.getElementById('profilepicturediv').src,
+                'line_statusMessege' : document.getElementById('statusmessagefield').textContent,
+                'latitude' : document.getElementById('latitude').textContent,
+                'longitude' : document.getElementById('longitude').textContent,
+                } 
+                
+               /*  
+               {
+                'line_userId' : 'testline',
+                'line_displayName' : 'testName',
+                'line_pictureUrl' : 'testSrc',
+                'line_statusMessege' :'testMSG',
+                'latitude' :  document.getElementById('latitude').textContent,
+                'longitude' :  document.getElementById('longitude').textContent,
+                }
+                */
+            });
+                if(data == "succesfully saved")
+                {
+             
+                //this.$store.commit('set_current_user', data.data);
+                
+                location.href = "./main";
+                //var userinfo = jwt.sign(payload, this.privateKeyJWT, { expiresIn:  2*60*60, });
+                 
+                }
+                else{
+                    alert(data.msg);
+                }
+            }catch(e){
+                console.log(e);
+            }
+        
+            }
+            else{
+                alert("ERROR : Please check your GPS or line account!!")
+            }
+        }
+
+         
        
     }
 }

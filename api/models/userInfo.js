@@ -6,18 +6,32 @@ var mongoose = require('mongoose');
 //const jwt = require("jsonwebtoken");
 
 
-var User_Schema = new mongoose.Schema({
+var UserInfo_Schema = new mongoose.Schema({
     
-    username: {
+    line_userId: {
         type: String,
         required: true,
         minlength: 1,
         trim: true,
     },
-
-    firstname:{
+    line_displayName:{
         type: String,
-
+    },
+    line_pictureUrl:{
+        type: String,
+    },
+    line_statusMessege:{
+        type: String,
+    },
+    latitude : {
+        type: String,
+    },
+    longitude  : {
+        type: String,
+    },
+    /*
+    line_userId:{
+        type: String,
     },
     lastname:{
          type: String,
@@ -66,9 +80,10 @@ var User_Schema = new mongoose.Schema({
         type: Date,
         default: null
     },
+    */
 });
 
 //User_Schema.plugin(autoIncrement.plugin, 'User');    
-var User= mongoose.model('User', User_Schema);
-module.exports = { User };
+var UserInfo = mongoose.model('UserInfo', UserInfo_Schema);
+module.exports = { UserInfo };
 

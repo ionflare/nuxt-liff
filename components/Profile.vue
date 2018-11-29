@@ -4,16 +4,16 @@
 VUE FORM
 <br>      
 displayName:
-{{$store.state.currentUser.displayName}}
+{{$store.state.currentUser.line_displayName}}
 <br>
 userId:
-{{$store.state.currentUser.lineId}}
+{{$store.state.currentUser.line_userId}}
 <br>
 PictureURL:
-{{$store.state.currentUser.pictureUrl}}
+{{$store.state.currentUser.line_pictureUrl}}
 <br>
 statusMessage:
-{{$store.state.currentUser.statusMessege}}
+{{$store.state.currentUser.line_statusMessege}}
 <br>
 latitude:
 {{$store.state.currentUser.latitude}}

@@ -1,5 +1,6 @@
 
-
+const bodyParser = require('body-parser')
+const session = require('express-session')
 /*
  // setBaseURL
 var env = process.env.NODE_ENV || 'development';
@@ -17,10 +18,10 @@ else{
  module.exports = {
     mode: 'universal',
     serverMiddleware:[
-      /*
+      
       bodyParser.json(),
       session({
-        secret: process.env.LINE_LOGIN_CHANNEL_SECRET,
+        secret: 'test',
         resave: false,
         saveUninitialized: false,
         cookie            : {
@@ -28,7 +29,7 @@ else{
           maxAge : 1000 * 60 * 60, // 60min
       }
       }),
-      */
+      
       '~/api'
       
     ],
