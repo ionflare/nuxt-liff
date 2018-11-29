@@ -11,13 +11,17 @@ const createStore = () => {
         statusMessege : null,
         latitude : null,
         longitude : null
-      }
+      },
+      kea : "sssss"
      
 
     },
     mutations: {
       init_user (state,payload) {
-        state.current_user = payload;
+        //state.current_user = payload;
+        //state.currentUser = payload;
+        state.kea = payload;
+
       }
     },
      actions:{

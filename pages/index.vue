@@ -102,14 +102,23 @@ export default {
         alertProfile(){
           //alert(document.getElementById('displaynamefield').textContent);
           //this.$store.state.current_user.user_id
+
+          /*
            this.$store.state.currentUser.displayName = document.getElementById('displaynamefield').textContent;
            this.$store.state.currentUser.lineId = document.getElementById('useridprofilefield').textContent;
            this.$store.state.currentUser.pictureUrl = document.getElementById('profilepicturediv').src;
            this.$store.state.currentUser.statusMessege = document.getElementById('statusmessagefield').textContent;
            this.$store.state.currentUser.latitude = document.getElementById('latitude').textContent;
            this.$store.state.currentUser.longitude = document.getElementById('longitude').textContent;
+            */
+           this.$store.commit('init_user', '555xx');
+            location.href = "./main";
 
-          if((this.$store.state.currentUser.latitude != null) && (this.$store.state.currentUser.longitude != null))
+
+
+
+          /*
+          if((this.$store.state.currentUser.latitude != "") && (this.$store.state.currentUser.longitude != ""))
           {
             location.href = "./main";
             //alert("Please turn on your GPS");
@@ -117,7 +126,7 @@ export default {
           else{
             alert("Please turn on your GPS");
           }
-
+         */
         },
        
     }

@@ -1,7 +1,8 @@
 <template>
   <v-app id="inspire">
     <v-container>
-      {{$store.state.currentUser.longitude}}
+      {{$store.state.kea}}
+      
       <v-layout row>
         <v-tabs
           centered
@@ -106,7 +107,7 @@ export default {
             }
         },
         updateVar (){
-           
+           return this.$store.state.currentUser.longitude
         },
     },
     methods : {
