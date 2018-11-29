@@ -14,7 +14,7 @@
                 <v-layout>
                   <v-flex xs5>
                     <v-img
-                      :src="$store.state.currentUser.line_displayName"
+                      :src="$store.state.currentUser.line_pictureUrl"
                       height="125px"
                       contain
                     ></v-img>
@@ -50,9 +50,6 @@ displayName:
 <br>
 userId:
 {{$store.state.currentUser.line_userId}}
-<br>
-PictureURL:
-{{$store.state.currentUser.line_pictureUrl}}
 <br>
 statusMessage:
 {{$store.state.currentUser.line_statusMessege}}
