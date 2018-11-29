@@ -33,14 +33,14 @@
         
           </div>
         </v-flex>
-         location = <div id="latitude"></div><div id="longitude"></div>
+         
       </v-layout>
       
 
     </v-container>
     <div style="display: none;">
       <div id="profileinfo">
-       
+       location = <div id="latitude"></div><div id="longitude"></div>
         <br>
         <h2>Profile (HTML FORM)</h2>
         <div id="profilepicturediv" >
@@ -153,11 +153,10 @@ export default {
             let data = await this.$axios.$post('/api/app_login',
             {
                 currentUser :
-                
                 {
                 'line_userId' : document.getElementById('useridprofilefield').textContent,
                 'line_displayName' : document.getElementById('displaynamefield').textContent,
-                'line_pictureUrl' : document.getElementById('profilepicturediv').src,
+                'line_pictureUrl' : document.getElementById('profilepicturediv').firstElementChild.src,
                 'line_statusMessege' : document.getElementById('statusmessagefield').textContent,
                 'latitude' : document.getElementById('latitude').textContent,
                 'longitude' : document.getElementById('longitude').textContent,
