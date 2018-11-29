@@ -11,21 +11,20 @@
             <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">GREETING / PROMOTION / ANNOUCMENT</h3>
-              <div>bla bla bla <br>Some advertisment here</div>
+            
             </div>
           </v-card-title>
             <v-card>
                 <v-img
                      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
 
-                      height="400px"
+                      height="300px"
                 ></v-img>
             </v-card>
             
             <v-card-title primary-title>
            
-             
-              <div>Patch change blah blah blah...</div>
+                <div>bla bla bla <br>Some advertisment here</div>
            
           </v-card-title>
             <v-btn  color="primary" dark  @click="onWebLogin()">GO TO DATING APP</v-btn>
@@ -145,8 +144,9 @@ export default {
          */
         },
          async onWebLogin(context){
-          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
-          && document.getElementById('useridprofilefield').textContent != "")
+          //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
+          //&& document.getElementById('useridprofilefield').textContent != "")
+          if(1)
           {
             try{
             let data = await this.$axios.$post('/api/app_login',
