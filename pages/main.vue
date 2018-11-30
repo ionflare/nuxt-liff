@@ -9,30 +9,32 @@
           icons-and-text>
           <v-tabs-slider color="yellow"></v-tabs-slider>
       
-          <v-tab href="#tab-1">
-            
+          <v-tab href="#tab-1" @click="setTab(1)">
             Profile
             <v-icon>account_box</v-icon>
           </v-tab>
       
-          <v-tab href="#tab-2">
+          <v-tab href="#tab-2" @click="setTab(2)">
             Setting
             <v-icon>settings</v-icon>
           </v-tab>
       
-          <v-tab href="#tab-3" >
+          <v-tab href="#tab-3" @click="setTab(3)" >
             Test Swipe
             <v-icon>favorite</v-icon>
           </v-tab>
 
-           <v-tab href="#tab-4" >
+           <v-tab href="#tab-4" @click="setTab(4)" >
             Friends
             <v-icon>location_on</v-icon>
           </v-tab>
           
           <v-tab-item  id="tab-1"
             key="1">
-            <Profile />
+          
+              <Profile   v-if="currentTab==1"/>
+         
+          
           </v-tab-item>
 
           <v-tab-item  id="tab-2"
@@ -81,7 +83,7 @@ export default {
   data: () => ({
     t_var : '',
     bottomNav: 'profile',
-    
+    currentTab : 1
   }),
   
 
@@ -109,9 +111,12 @@ export default {
         },
     },
     methods : {
-      
+      setTab(inputTab){
+        this.currentTab = inputTab;
+      }
     },
-  
+
+ 
   
 }
 </script>

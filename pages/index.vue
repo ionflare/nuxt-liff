@@ -147,16 +147,24 @@ export default {
          async onWebLogin(context){
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
           //&& document.getElementById('useridprofilefield').textContent != "")
-          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
+          //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
+          if(1)
           {
             try{
+            var pictureUrl = ""; 
+            if(document.getElementById('profilepicturediv').childElementCount > 0)
+            { pictureUrl = document.getElementById('profilepicturediv').firstElementChild.src; }
+            else{
+                 pictureUrl = "https://d3icht40s6fxmd.cloudfront.net/sites/default/files/test-product-test.png";
+            }
+
             let data = await this.$axios.$post('/api/app_login',
             {
                 currentUser :
                 {
                 'line_userId' : document.getElementById('useridprofilefield').textContent,
                 'line_displayName' : document.getElementById('displaynamefield').textContent,
-                'line_pictureUrl' : document.getElementById('profilepicturediv').firstElementChild.src,
+                'line_pictureUrl' : pictureUrl,
                 'line_statusMessege' : document.getElementById('statusmessagefield').textContent,
                 'latitude' : document.getElementById('latitude').textContent,
                 'longitude' : document.getElementById('longitude').textContent,

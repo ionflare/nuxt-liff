@@ -16,11 +16,37 @@ app.post('/app_login',async(req,res)=>{
         'latitude' : req.body.currentUser.latitude,
         'longitude' : req.body.currentUser.longitude,
     }
-    UserInfo.findOneAndUpdate(query, newData, {upsert:true}, function(err, doc){
+    UserInfo.findOneAndUpdate(query, newData, {upsert:true ,
+        new: true }, function(err, doc){
         if (err) return res.send(500, { error: err });
         else{
-            req.session.currentUser = req.body.currentUser;
+            req.session.currentUser = doc;
             return res.send("succesfully saved");
+        }
+      
+    });
+})
+
+app.post('/update_profile',async(req,res)=>{
+    //req.session.kea = "sssfffxxx";
+    var query = {'line_userId' : req.body.currentUser.line_userId};
+    var newData = {
+        'line_userId' : req.body.currentUser.line_userId,
+        'line_displayName' : req.body.currentUser.line_displayName,
+        'line_pictureUrl' : req.body.currentUser.line_pictureUrl,
+        'line_statusMessege' : req.body.currentUser.line_statusMessege,
+        'latitude' : req.body.currentUser.latitude,
+        'longitude' : req.body.currentUser.longitude,
+        'gender' : req.body.currentUser.gender,
+        'age' : req.body.currentUser.age,
+    }
+    UserInfo.findOneAndUpdate(query, newData, {upsert:true
+        , new: true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        else{
+            req.session.currentUser = doc;
+            //return res.send("succesfully saved");
+            res.send({result :"successed", msg: "No Error", info: {doc}});
         }
       
     });
@@ -28,13 +54,22 @@ app.post('/app_login',async(req,res)=>{
 
 
 
- app.get('/testget', (req,res)=>{
+ app.get('/getCurrentUserInfo', (req,res)=>{
+    var query = {'line_userId' : req.body.currentUser.line_userId};
+    UserInfo.findOne({
+        query
+     }).then((user)=>{ 
+        if(!user)
+        {
+            res.send({result :"failed", msg: "Error!!", info: { }});
+        }
+        else
+        {
+            res.send({result :"successed", msg: "No Error", info: {user}});
+        }
     
-    //req.session.current_user = null;
-    res.send("xxx" );
-    //res.redirect("www.google.com");
- })
- 
+     });
+})
 module.exports = {
     path: '/api',
     handler: app

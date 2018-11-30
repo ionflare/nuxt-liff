@@ -29,58 +29,32 @@ var UserInfo_Schema = new mongoose.Schema({
     longitude  : {
         type: String,
     },
-    /*
-    line_userId:{
+    
+    gender:{
         type: String,
     },
-    lastname:{
-         type: String,
 
-    },
-    displayName:{
-        type: String,
-    },
-    address:{
-        type: String,
-      
-    },
-    picture:{
-        type: String,
+    age:{
+        type: Number,
     },
     
-    loginType: {
+    search_gender:{
         type: String,
-        required: true,
+    },
+
+    search_distance_max:{
+        type: Number,
     },
     
-    isValidated: {
-        type: Boolean,
-        required: true,
+    search_distance_min: {
+        type: Number,
     },
-    
-    
-    USER_ROLE_id: {
-        type: String,
-        required: true,
-        default: false
+    search_age_max: {
+        type: Number,
     },
-    isValidated: {
-        type: Boolean,
-        required: true,
-    },
-    isActive: {
-        type: Boolean,
-        required: true,
-    },
-    lastLocation: {
-        type: Date,
-        default: null
-    },
-    lastUpdate: {
-        type: Date,
-        default: null
-    },
-    */
+    search_age_min: {
+        type: Number,
+    }
 });
 
 //User_Schema.plugin(autoIncrement.plugin, 'User');    

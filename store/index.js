@@ -10,9 +10,11 @@ const createStore = () => {
         line_pictureUrl : null,
         line_statusMessege : null,
         latitude : null,
-        longitude : null
+        longitude : null,
+        gender : null,
+        age : null,
+
       },
-      kea : null
     },
     mutations: {
       init_user (state,payload) {
