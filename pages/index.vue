@@ -147,8 +147,8 @@ export default {
          async onWebLogin(context){
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
           //&& document.getElementById('useridprofilefield').textContent != "")
-          //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
-          if(1)
+          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
+          //if(1)
           {
             try{
             var pictureUrl = ""; 

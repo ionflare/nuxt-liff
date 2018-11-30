@@ -33,22 +33,26 @@
                 <v-card-actions class="pa-3">
                   Gender
                   <v-spacer></v-spacer>
+                  <v-flex xs5>
                    <v-select 
                       :items="gender_items"
-                      label=""
+                      :label="noticeGender"
                       v-model="selected_gender"
                       
                     ></v-select>
+                    </v-flex>
                 </v-card-actions>
                 <v-divider light></v-divider>
                 <v-card-actions class="pa-3">
                   Age
                   <v-spacer></v-spacer>
+                   <v-flex xs5>
                    <v-select
                       :items="age_items"
-                      label=""
+                      :label="noticeAge"
                       v-model="selected_age"
                     ></v-select>
+                   </v-flex>
                 </v-card-actions>
                 <v-divider light></v-divider>
                 <v-card-actions class="pa-3">
@@ -69,9 +73,10 @@ latitude:
 <br>
 longitude:
 {{$store.state.currentUser.longitude}}
+<!--
 age :
 {{$store.state.currentUser.age}}
-
+-->
 
 <br>      
   </div>
@@ -94,15 +99,18 @@ export default {
     getAge: function(){
         return this.$store.state.currentUser.age;
     },
-   
+   noticeGender: function(){
+     if(this.selected_gender == "" || this.selected_gender== null)
+        return "Please fill your gender information";
+    },
+    noticeAge: function(){
+     if(this.selected_age == "" || this.selected_age== null)
+        return "Please fill your age information";
+    },
   },
   methods: { 
 
-     resetComponent()
-     {
-        this.selected_age = 66;
-     },
-     
+   
      async saveProfile(){
       let data = await this.$axios.$post('/api/update_profile',
             {
@@ -121,6 +129,7 @@ export default {
       if(data.result == "successed")
       { 
         this.$store.state.currentUser.age = this.selected_age;
+         this.$store.state.currentUser.gender = this.selected_gender;
         alert("succesfully saved"); 
       }
       else{
@@ -128,19 +137,6 @@ export default {
       
     },
   },
-  /*
-  asyncData(context){
-    return this.$axios.$get('/api/getCurrentUserInfo')
-    .then(data =>{
-        
-       return   {
-         selected_gender: data.info.user.gender,
-         selected_age: data.info.user.age
-        }
-     
-    }).catch(e => context.error(e));
   
-  } 
-  */
 }
 </script>
