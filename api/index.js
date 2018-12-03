@@ -92,9 +92,25 @@ app.post('/update_settings',async(req,res)=>{
         {
             res.send({result :"successed", msg: "No Error", info: {user}});
         }
-    
      });
 })
+
+app.post('/getOtherUserInfo', (req,res)=>{
+
+    UserInfo.find({ 
+        //findall
+     }).then((alluser)=>{ 
+        if(!alluser){
+            res.send({result :"failed", msg: "Error!!", info: { }});
+        }
+        else
+        {
+            res.send({result :"successed", msg: "No Error", info: {alluser}});
+        }
+     });
+})
+
+
 module.exports = {
     path: '/api',
     handler: app
