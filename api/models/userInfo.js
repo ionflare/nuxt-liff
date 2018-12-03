@@ -45,10 +45,6 @@ var UserInfo_Schema = new mongoose.Schema({
     search_distance_max:{
         type: Number,
     },
-    
-    search_distance_min: {
-        type: Number,
-    },
     search_age_max: {
         type: Number,
     },

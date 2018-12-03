@@ -13,7 +13,10 @@ const createStore = () => {
         longitude : null,
         gender : null,
         age : null,
-
+        search_gender : null,
+        search_distance_max : null,
+        search_age_max : null,
+        search_age_min : null
       },
     },
     mutations: {

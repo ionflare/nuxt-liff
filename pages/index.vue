@@ -10,7 +10,7 @@
           
             <v-card-title primary-title>
             <div>
-              <h3 class="headline mb-0">GREETING / PROMOTION / ANNOUCMENT</h3>
+              <h3 class="headline mb-0">GREETING / PROMOTION / ANNOUCEMENT</h3>
             
             </div>
           </v-card-title>

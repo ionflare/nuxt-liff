@@ -53,6 +53,31 @@ app.post('/update_profile',async(req,res)=>{
 })
 
 
+app.post('/update_settings',async(req,res)=>{
+    //req.session.kea = "sssfffxxx";
+    var query = {'line_userId' : req.body.currentUser.line_userId};
+    var newData = {
+        'line_userId' : req.body.currentUser.line_userId,
+        'search_gender' : req.body.currentUser.search_gender,
+        'search_distance_max' : req.body.currentUser.search_distance_max,
+        'search_age_min' : req.body.currentUser.search_age_min,
+        'search_age_max' : req.body.currentUser.search_age_max, 
+    }
+    UserInfo.findOneAndUpdate(query, newData, {upsert:true
+        , new: true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        else{
+            req.session.currentUser = doc;
+            //return res.send("succesfully saved");
+            res.send({result :"successed", msg: "No Error", info: {doc}});
+        }
+      
+    });
+})
+
+
+
+
 
  app.get('/getCurrentUserInfo', (req,res)=>{
     var query = {'line_userId' : req.body.currentUser.line_userId};

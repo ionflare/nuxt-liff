@@ -40,7 +40,7 @@
           <v-tab-item  id="tab-2"
             key="2">
             
-              <Settings />
+              <Settings v-if="currentTab==2"/>
                 
           </v-tab-item>
 

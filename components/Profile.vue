@@ -109,8 +109,6 @@ export default {
     },
   },
   methods: { 
-
-   
      async saveProfile(){
       let data = await this.$axios.$post('/api/update_profile',
             {
