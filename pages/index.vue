@@ -151,7 +151,7 @@ export default {
           //if(1)
           {
             try{
-            var pictureUrl = ""; 
+            let pictureUrl = ""; 
             if(document.getElementById('profilepicturediv').childElementCount > 0)
             { pictureUrl = document.getElementById('profilepicturediv').firstElementChild.src; }
             else{

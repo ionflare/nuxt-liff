@@ -2,7 +2,7 @@
 <v-container grid-list-md>
       <v-layout row wrap>
         <v-flex xs12>
-          <v-subheader class="pl-0">Max Distance(KM)</v-subheader>
+          <v-subheader class="pl-0">Max Distance in KM (100 = regardless of distance)</v-subheader>
           <v-slider v-if="IsSetSearchDistance"
             v-model="search_distance_max"
             thumb-color="teal"

@@ -18,6 +18,7 @@ const createStore = () => {
         search_age_max : null,
         search_age_min : null
       },
+      otherUserProfile:[]
     },
     mutations: {
       init_user (state,payload) {

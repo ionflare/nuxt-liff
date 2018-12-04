@@ -15,12 +15,12 @@
           </v-tab>
       
           <v-tab href="#tab-2" @click="setTab(2)">
-            Setting
+            Settings
             <v-icon>settings</v-icon>
           </v-tab>
       
           <v-tab href="#tab-3" @click="setTab(3)" >
-            Test Swipe
+            Swipe
             <v-icon>favorite</v-icon>
           </v-tab>
 
@@ -31,10 +31,7 @@
           
           <v-tab-item  id="tab-1"
             key="1">
-          
               <Profile   v-if="currentTab==1"/>
-         
-          
           </v-tab-item>
 
           <v-tab-item  id="tab-2"
@@ -43,16 +40,14 @@
               <Settings v-if="currentTab==2"/>
                 
           </v-tab-item>
-
-
             <v-tab-item  id="tab-3"
             key="3">
-              <SwipeUser />
+              <SwipeUser v-if="currentTab==3"/>
           </v-tab-item>
 
             <v-tab-item  id="tab-4"
             key="4">
-             <Mailbox />
+             <Mailbox v-if="currentTab==4"/>
           </v-tab-item>
 
       </v-tabs>
@@ -65,6 +60,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import Profile from '~/components/Profile.vue';
 import SwipeUser from '~/components/SwipeUser.vue';
 import Settings from '~/components/Settings.vue';
@@ -79,21 +75,22 @@ export default {
       //{  src: '/geoip.js'},
     ]
   },
-  
+  /*
   data: () => ({
-    t_var : '',
+    
     bottomNav: 'profile',
-    currentTab : 1
+    currentTab : 1,
+    otherUserProfile : ['']
   }),
-  
-
-
- /*
-  data: {
-    t_var : 'kuy',
-    bottomNav: 'profile'
-  },
   */
+  data () {
+    return {
+   
+      bottomNav: 'profile',
+      currentTab : 1,
+      //otherUserProfile : ['']
+    }
+  },
    components:{
       Profile, SwipeUser, Settings, Mailbox
   },
@@ -115,8 +112,13 @@ export default {
         this.currentTab = inputTab;
       }
     },
+  asyncData(context){
+     let currentUserLinedId = context.store.state.currentUser.line_userId;
+    return context.app.$axios.$post('/api/getAllUserInfo')
+    .then(data =>{
+      context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;})
+    }).catch(e => context.error(e));
 
- 
-  
+  }
 }
 </script>

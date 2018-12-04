@@ -7,8 +7,21 @@ const { UserInfo } = require("./models/userInfo");
 
 app.post('/app_login',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
-    var query = {'line_userId' : req.body.currentUser.line_userId};
-    var newData = {
+    let newData = [];
+    let query = {'line_userId' : req.body.currentUser.line_userId};
+    if (req.body.currentUser.line_displayName != "")
+    { newData.push({'line_displayName' : req.body.currentUser.line_displayName });}
+    if (req.body.currentUser.line_pictureUrl != "")
+    { newData.push({'line_pictureUrl' : req.body.currentUser.line_pictureUrl });}
+    if (req.body.currentUser.line_statusMessege != "")
+    { newData.push({'line_statusMessege' : req.body.currentUser.line_statusMessege });}
+    if (req.body.currentUser.latitude != "")
+    { newData.push({'latitude' : req.body.currentUser.latitude });}
+    if (req.body.currentUser.longitude != "")
+    { newData.push({'longitude' : req.body.currentUser.longitude });}
+
+    /*
+    let newData = {
         'line_userId' : req.body.currentUser.line_userId,
         'line_displayName' : req.body.currentUser.line_displayName,
         'line_pictureUrl' : req.body.currentUser.line_pictureUrl,
@@ -16,6 +29,7 @@ app.post('/app_login',async(req,res)=>{
         'latitude' : req.body.currentUser.latitude,
         'longitude' : req.body.currentUser.longitude,
     }
+    */
     UserInfo.findOneAndUpdate(query, newData, {upsert:true ,
         new: true }, function(err, doc){
         if (err) return res.send(500, { error: err });
@@ -95,7 +109,7 @@ app.post('/update_settings',async(req,res)=>{
      });
 })
 
-app.post('/getOtherUserInfo', (req,res)=>{
+app.post('/getAllUserInfo', (req,res)=>{
 
     UserInfo.find({ 
         //findall
