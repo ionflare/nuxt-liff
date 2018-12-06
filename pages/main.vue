@@ -47,7 +47,7 @@
 
             <v-tab-item  id="tab-4"
             key="4">
-             <Mailbox v-if="currentTab==4"/>
+             <ChatMain v-if="currentTab==4"/>
           </v-tab-item>
 
       </v-tabs>
@@ -64,7 +64,7 @@ import _ from 'lodash';
 import Profile from '~/components/Profile.vue';
 import SwipeUser from '~/components/SwipeUser.vue';
 import Settings from '~/components/Settings.vue';
-import Mailbox from '~/components/Mailbox.vue';
+import ChatMain from '~/components/ChatMain.vue';
 export default {
   head: {
     script: [
@@ -92,7 +92,7 @@ export default {
     }
   },
    components:{
-      Profile, SwipeUser, Settings, Mailbox
+      Profile, SwipeUser, Settings, ChatMain
   },
   
   computed:{
