@@ -39,16 +39,13 @@
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
                   <!--<v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>-->
                 </v-list-tile-content>
-                 <v-btn color="primary" fab small dark>
-                    <v-icon>edit</v-icon>
+                 <v-btn color="green" fab small dark>
+                    <v-icon>check</v-icon>
                 </v-btn>
                 <v-btn color="red" fab small dark>
-                    <v-icon>edit</v-icon>
+                    <v-icon>close</v-icon>
                 </v-btn>
-                 <v-list-tile-action>
-
-               
-              </v-list-tile-action>
+                 
               </v-list-tile>
             </template>
           </v-list>
@@ -66,7 +63,7 @@ export default
         { header: 'Today' },
         {
           avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
+          title: 'Brunch',
           subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
         },
         { divider: true, inset: true },
