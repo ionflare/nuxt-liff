@@ -4,28 +4,35 @@ const app = express();
 const ObjectId = require('mongoose').Types.ObjectId; 
 const { mongoose } = require('./db/mongoose');
 const { UserInfo } = require("./models/userInfo");
+const { FriendInfo } = require("./models/friendInfo");
+const { FriendReq } = require("./models/friendReq");
 
 app.post('/app_login',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
-    let newData = [];
-    let query = {'line_userId' : req.body.currentUser.line_userId};
-    if (req.body.currentUser.line_displayName != "")
-    { newData.push({'line_displayName' : req.body.currentUser.line_displayName });}
-    if (req.body.currentUser.line_pictureUrl != "")
-    { newData.push({'line_pictureUrl' : req.body.currentUser.line_pictureUrl });}
-    if (req.body.currentUser.line_statusMessege != "")
-    { newData.push({'line_statusMessege' : req.body.currentUser.line_statusMessege });}
+    
+    let query = {
+        'ext_userId' : req.body.currentUser.ext_userId,
+        'loginMethod' : req.body.currentUser.loginMethod
+        };
+        
+    let newData = {};
+    if (req.body.currentUser.ext_displayName != "")
+    { newData.ext_displayName = req.body.currentUser.ext_displayName;}
+    if (req.body.currentUser.ext_pictureUrl != "")
+    { newData.ext_pictureUrl = req.body.currentUser.ext_pictureUrl;}
+    if (req.body.currentUser.ext_statusMessege != "")
+    { newData.ext_statusMessege = req.body.currentUser.ext_statusMessege;}
     if (req.body.currentUser.latitude != "")
-    { newData.push({'latitude' : req.body.currentUser.latitude });}
+    { newData.latitude = req.body.currentUser.latitude;}
     if (req.body.currentUser.longitude != "")
-    { newData.push({'longitude' : req.body.currentUser.longitude });}
-
+    { newData.longitude = req.body.currentUser.longitude;}
+    
     /*
     let newData = {
-        'line_userId' : req.body.currentUser.line_userId,
-        'line_displayName' : req.body.currentUser.line_displayName,
-        'line_pictureUrl' : req.body.currentUser.line_pictureUrl,
-        'line_statusMessege' : req.body.currentUser.line_statusMessege,
+   
+        'ext_displayName' : req.body.currentUser.ext_displayName,
+        'ext_pictureUrl' : req.body.currentUser.ext_pictureUrl,
+        'ext_statusMessege' : req.body.currentUser.ext_statusMessege,
         'latitude' : req.body.currentUser.latitude,
         'longitude' : req.body.currentUser.longitude,
     }
@@ -43,12 +50,11 @@ app.post('/app_login',async(req,res)=>{
 
 app.post('/update_profile',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
-    var query = {'line_userId' : req.body.currentUser.line_userId};
+    var query = { '_id': new ObjectId(req.body.currentUser._id) };
     var newData = {
-        'line_userId' : req.body.currentUser.line_userId,
-        'line_displayName' : req.body.currentUser.line_displayName,
-        'line_pictureUrl' : req.body.currentUser.line_pictureUrl,
-        'line_statusMessege' : req.body.currentUser.line_statusMessege,
+        'ext_displayName' : req.body.currentUser.ext_displayName,
+        'ext_pictureUrl' : req.body.currentUser.ext_displayName,
+        'ext_statusMessege' : req.body.currentUser.ext_statusMessege,
         'latitude' : req.body.currentUser.latitude,
         'longitude' : req.body.currentUser.longitude,
         'gender' : req.body.currentUser.gender,
@@ -69,9 +75,8 @@ app.post('/update_profile',async(req,res)=>{
 
 app.post('/update_settings',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
-    var query = {'line_userId' : req.body.currentUser.line_userId};
+    var query = { '_id': new ObjectId(req.body.currentUser._id) };
     var newData = {
-        'line_userId' : req.body.currentUser.line_userId,
         'search_gender' : req.body.currentUser.search_gender,
         'search_distance_max' : req.body.currentUser.search_distance_max,
         'search_age_min' : req.body.currentUser.search_age_min,
@@ -89,26 +94,6 @@ app.post('/update_settings',async(req,res)=>{
     });
 })
 
-
-
-
-
- app.get('/getCurrentUserInfo', (req,res)=>{
-    var query = {'line_userId' : req.body.currentUser.line_userId};
-    UserInfo.findOne({
-        query
-     }).then((user)=>{ 
-        if(!user)
-        {
-            res.send({result :"failed", msg: "Error!!", info: { }});
-        }
-        else
-        {
-            res.send({result :"successed", msg: "No Error", info: {user}});
-        }
-     });
-})
-
 app.post('/getAllUserInfo', (req,res)=>{
 
     UserInfo.find({ 
@@ -123,6 +108,25 @@ app.post('/getAllUserInfo', (req,res)=>{
         }
      });
 })
+
+app.post('/makeFriendReq', (req,res)=>{
+
+    UserInfo.find({ 
+        //findall
+     }).then((alluser)=>{ 
+        if(!alluser){
+            res.send({result :"failed", msg: "Error!!", info: { }});
+        }
+        else
+        {
+            res.send({result :"successed", msg: "No Error", info: {alluser}});
+        }
+     });
+})
+
+
+
+
 
 
 module.exports = {

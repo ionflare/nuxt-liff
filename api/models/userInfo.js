@@ -8,19 +8,24 @@ var mongoose = require('mongoose');
 
 var UserInfo_Schema = new mongoose.Schema({
     
-    line_userId: {
+
+    //line, Fb, google, etc
+    loginMethod: {
+        type: String,
+    },
+    ext_userId: {
         type: String,
         required: true,
         minlength: 1,
         trim: true,
     },
-    line_displayName:{
+    ext_displayName:{
         type: String,
     },
-    line_pictureUrl:{
+    ext_pictureUrl:{
         type: String,
     },
-    line_statusMessege:{
+    ext_statusMessege:{
         type: String,
     },
     latitude : {

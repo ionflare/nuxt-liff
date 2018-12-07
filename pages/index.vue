@@ -38,7 +38,8 @@
       
 
     </v-container>
-    <div style="display: none;">
+    
+    <div style="display: block;">
       <div id="profileinfo">
        location = <div id="latitude"></div><div id="longitude"></div>
         <br>
@@ -113,7 +114,11 @@ export default {
   data: () => ({  
       
   }),
-
+    mounted () {
+        // we can implement any method here like
+      
+    },
+    
     methods : {
         alertProfile(){
           //alert(document.getElementById('displaynamefield').textContent);
@@ -147,52 +152,77 @@ export default {
          async onWebLogin(context){
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
           //&& document.getElementById('useridprofilefield').textContent != "")
-          if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
-          //if(1)
+          //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
+          if(1)
           {
             try{
-            let pictureUrl = ""; 
-            if(document.getElementById('profilepicturediv').childElementCount > 0)
-            { pictureUrl = document.getElementById('profilepicturediv').firstElementChild.src; }
-            else{
-                 pictureUrl = "https://d3icht40s6fxmd.cloudfront.net/sites/default/files/test-product-test.png";
-            }
 
-            let data = await this.$axios.$post('/api/app_login',
-            {
-                currentUser :
-                {
-                'line_userId' : document.getElementById('useridprofilefield').textContent,
-                'line_displayName' : document.getElementById('displaynamefield').textContent,
-                'line_pictureUrl' : pictureUrl,
-                'line_statusMessege' : document.getElementById('statusmessagefield').textContent,
-                'latitude' : document.getElementById('latitude').textContent,
-                'longitude' : document.getElementById('longitude').textContent,
-                } 
+                var loginMethod = "";
+                var ext_userId =  document.getElementById('useridprofilefield').textContent;
+                var ext_displayName = "";
+                var ext_pictureUrl = "";
+                var ext_statusMessege = "";
+                var alertMsg ="";
                 
-               /*  
-               {
-                'line_userId' : 'testline',
-                'line_displayName' : 'testName',
-                'line_pictureUrl' : 'testSrc',
-                'line_statusMessege' :'testMSG',
-                'latitude' :  document.getElementById('latitude').textContent,
-                'longitude' :  document.getElementById('longitude').textContent,
-                }
-                */
-            });
-                if(data == "succesfully saved")
-                {
-             
-                //this.$store.commit('set_current_user', data.data);
+                if(ext_userId != "" && loginMethod != 'testMehod')
+                { 
+                    loginMethod = 'line'; 
+                    ext_displayName = document.getElementById('displaynamefield').textContent;
+                    ext_pictureUrl = document.getElementById('profilepicturediv').firstElementChild.src;
+                    ext_statusMessege = document.getElementById('statusmessagefield').textContent;
                 
-                location.href = "./main";
-                //var userinfo = jwt.sign(payload, this.privateKeyJWT, { expiresIn:  2*60*60, });
-                 
                 }
                 else{
-                    alert(data.msg);
+                    loginMethod = 'testMehod';
+                    ext_userId = "TestUser1";
+                    ext_displayName = "TestUser1";
+                    ext_pictureUrl = "https://d3icht40s6fxmd.cloudfront.net/sites/default/files/test-product-test.png";
+                    ext_statusMessege = "Hello Tester";
+                    alertMsg = "Welcome Tester";
                 }
+
+                var latitude = document.getElementById('latitude').textContent;
+                var longitude = document.getElementById('longitude').textContent;
+                
+                if(latitude == "" || longitude == "")
+                {
+                    latitude = 13.908593;
+                    longitude = 100.501541;
+                    alertMsg += "Your Location Info did not set properly Please check your gps!!"; 
+                }
+
+                //alert(ext_pictureUrl);
+                
+                let data = await this.$axios.$post('/api/app_login',
+                {
+                    currentUser :
+                    {
+                    'loginMethod' : loginMethod,    
+                    'ext_userId' : ext_userId,
+                    'ext_displayName' :ext_displayName,
+                    'ext_pictureUrl' : ext_pictureUrl,
+                    'ext_statusMessege' : ext_statusMessege,
+                    'latitude' : latitude,
+                    'longitude' : longitude,
+                    } 
+                    
+                });
+                    if(data == "succesfully saved")
+                    {
+                
+                    //this.$store.commit('set_current_user', data.data);
+                    if(alertMsg != "")
+                    {
+                        alert("Welcome Tester");
+                    }
+                    location.href = "./main";
+                    //var userinfo = jwt.sign(payload, this.privateKeyJWT, { expiresIn:  2*60*60, });
+                    
+                    }
+                    else{
+                        alert(data.msg);
+                    }
+                    
             }catch(e){
                 console.log(e);
             }

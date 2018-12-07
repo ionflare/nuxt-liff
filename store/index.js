@@ -5,10 +5,12 @@ const createStore = () => {
 
     state: {
       currentUser:{
-        line_userId : null,
-        line_displayName : null,
-        line_pictureUrl : null,
-        line_statusMessege : null,
+        _id : null,
+        loginMethod : null,
+        ext_userId : null,
+        ext_displayName : null,
+        ext_pictureUrl : null,
+        ext_statusMessege : null,
         latitude : null,
         longitude : null,
         gender : null,
@@ -18,7 +20,8 @@ const createStore = () => {
         search_age_max : null,
         search_age_min : null
       },
-      otherUserProfile:[]
+      otherUserProfile:[],
+
     },
     mutations: {
       init_user (state,payload) {

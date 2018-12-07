@@ -112,13 +112,21 @@ export default {
         this.currentTab = inputTab;
       }
     },
-  asyncData(context){
-     let currentUserLinedId = context.store.state.currentUser.line_userId;
+   async asyncData(context){
+     //let currentUserLinedId = context.store.state.currentUser.line_userId;
+     let currentUserId = context.store.state.currentUser._id;
+     let data = await context.app.$axios.$post('/api/getAllUserInfo');
+     context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o._id != currentUserId;})
+     //let data = await context.app.$axios.$post('/api/getFriendReqById',{ userId :  line_userId});
+     
+
+     /*
     return context.app.$axios.$post('/api/getAllUserInfo')
     .then(data =>{
-      context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;})
+      //context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;})
+      _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
     }).catch(e => context.error(e));
-
+    */
   }
 }
 </script>

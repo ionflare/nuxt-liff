@@ -10,7 +10,7 @@
                <br>
                <center>
                    Found 1 Result
-                <v-img width=200 height=200 :src="FilterFromSetting[0].line_pictureUrl"></v-img>
+                <v-img width=200 height=200 :src="FilterFromSetting[0].ext_pictureUrl"></v-img>
                  </center>
                 <br>
                 <v-card
@@ -20,7 +20,7 @@
                         >   
                         <center>
                             Index : 0
-                            <br>Name : {{FilterFromSetting[0].line_displayName}} 
+                            <br>Name : {{FilterFromSetting[0].ext_displayName}} 
                             <br>Gender : {{FilterFromSetting[0].gender}} 
                             <br>Age : {{FilterFromSetting[0].age}} 
                             <br>Distance : {{FilterFromSetting[0].dist}} KM.
@@ -49,7 +49,7 @@
                 <v-stepper-items>
                     <v-stepper-content v-for="(item, index)  in FilterFromSetting" :key="item._id" :step="index">
                         <center>
-                        <v-img width=200 height=200 :src="item.line_pictureUrl"></v-img>
+                        <v-img width=200 height=200 :src="item.ext_pictureUrl"></v-img>
                         </center>
                         <br> 
                          <v-card
@@ -60,7 +60,7 @@
                         
                         <center>
                             Index : {{index}} 
-                            <br>Name : {{item.line_displayName}} 
+                            <br>Name : {{item.ext_displayName}} 
                             <br>Gender : {{item.gender}} 
                             <br>Age : {{item.age}} 
                             <br>Distance : {{item.dist}} KM.
@@ -146,10 +146,10 @@ export default {
         async getOtherUserProfile(){
             let data = await this.$axios.$post('/api/getAllUserInfo',{});
             if(data.result == "successed")
-            {   let currentUserLinedId = this.$store.state.currentUser.line_userId;
+            {   let currentUserId = this.$store.state.currentUser._id;
                
 
-                this.$store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;});
+                this.$store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o._id != currentUserId;});
                 
                 this.e1 =0;
             }
@@ -172,7 +172,24 @@ export default {
         },
         deg2rad(deg) {
             return deg * (Math.PI/180)
-        }           
+        },
+        makeFriendReq(deg) {
+
+            
+            /*
+            let data = await this.$axios.$post('/api/makeFriendReq',{});
+            if(data.result == "successed")
+            {   let currentUserLinedId = this.$store.state.currentUser.line_userId;
+               
+
+                this.$store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;});
+                
+                this.e1 =0;
+            }
+            else{
+                alert("Error occured while getting other user profile");  }
+            */
+        }                 
 
   },
   computed : {

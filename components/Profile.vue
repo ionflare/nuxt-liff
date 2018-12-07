@@ -7,14 +7,15 @@
           fluid
           grid-list-lg
         >
-          <v-layout row wrap>    
-
+          <v-layout row wrap
+          >    
+          {{$store.state.currentUser.ext_displayName}}  
        <v-flex xs12>
               <v-card color="cyan darken-2" class="white--text">
                 <v-layout>
                   <v-flex xs5>
                     <v-img
-                      :src="$store.state.currentUser.line_pictureUrl"
+                      :src="$store.state.currentUser.ext_pictureUrl"
                       height="125px"
                       contain
                     ></v-img>
@@ -22,9 +23,9 @@
                   <v-flex xs7>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">{{$store.state.currentUser.line_displayName}}</div>
+                        <div class="headline">{{$store.state.currentUser.ext_displayName}}</div>
                         <div>statusMessage</div>
-                        <div>{{$store.state.currentUser.line_statusMessege}}</div>
+                        <div>{{$store.state.currentUser.ext_statusMessege}}</div>
                       </div>
                     </v-card-title>
                   </v-flex>
@@ -114,10 +115,10 @@ export default {
             {
                 currentUser :
                 {
-                  'line_userId' : this.$store.state.currentUser.line_userId,
-                  'line_displayName' : this.$store.state.currentUser.line_displayName,
-                  'line_pictureUrl' : this.$store.state.currentUser.line_pictureUrl,
-                  'line_statusMessege' : this.$store.state.currentUser.line_statusMessege,
+                  '_id' : this.$store.state.currentUser._id,
+                  'ext_displayName' : this.$store.state.currentUser.ext_displayName,
+                  'ext_pictureUrl' : this.$store.state.currentUser.ext_pictureUrl,
+                  'ext_statusMessege' : this.$store.state.currentUser.ext_statusMessege,
                   'latitude' : this.$store.state.currentUser.latitude,
                   'longitude' : this.$store.state.currentUser.longitude,
                   'gender' : this.selected_gender,

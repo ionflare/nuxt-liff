@@ -118,7 +118,7 @@ export default {
      async saveSettings(){
 
         let currentUser = 
-        {'line_userId' : this.$store.state.currentUser.line_userId }
+        {'_id' : this.$store.state.currentUser._id }
 
         if(this.$store.state.currentUser.search_distance_max == null)
         { currentUser.search_distance_max = this.predefineSearchDistance; }
