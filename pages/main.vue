@@ -51,7 +51,7 @@
           </v-tab-item>
 
       </v-tabs>
-      {{$store.state.requestedList}}
+      
       </v-layout>
     </v-container>
   </v-app>

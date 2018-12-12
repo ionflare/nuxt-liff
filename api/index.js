@@ -119,7 +119,6 @@ app.post('/getAvailableUser', (req,res)=>{
  
             //filter 
             res.send({result :"successed", msg: "No Error", info: reqList});
-
         });
     UserInfo.find({ 
         $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
@@ -141,22 +140,27 @@ app.post('/getRequestedListById', async(req,res)=>{
         let friendList = await FriendReq.find(
             { $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
                     { 'reqToId': new ObjectId(req.body.currentUserId) } ]  });
-        let storeReqList = [req.body.currentUserId];    
-        
+        let storeAllReqList = [req.body.currentUserId];    
+        let storeReqFromOtherUser =  [];    
         for(let i = 0; i< friendList.length; i++)
         {
             if(friendList[i].reqFromId == req.body.currentUserId)
-            {  storeReqList.push( friendList[i].reqToId ); 
+            {  storeAllReqList.push( friendList[i].reqToId ); 
             }
             else
-            {  storeReqList.push( friendList[i].reqFromId );
+            {  storeAllReqList.push( friendList[i].reqFromId );
+                if(friendList[i].isInterested == true)
+                {
+                    storeReqFromOtherUser.push( friendList[i].reqFromId );
+                }
+                
             } 
         }
         
         let availableUser = await UserInfo.find(
-            { _id: { $nin: storeReqList }});
+            { _id: { $nin: storeAllReqList }});
         let friendReq = await UserInfo.find(
-                { _id: { $in: storeReqList }});
+                { _id: { $in: storeReqFromOtherUser }});
            
         res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq}});           
 
@@ -183,18 +187,85 @@ app.post('/makeFriendReq', (req,res)=>{
 })
 
 
-app.get('/TestFriendReq', (req,res)=>{
+app.get('/testAddFriendReq', async (req,res)=>{
 
-    let newReq = new FriendReq({
-        reqFromId : '5c0a518f7687954bdfe0a4e6',
-        reqToId : '5c0a49437687954bdfe09228',
-        isInterested : true,
-        reqDate : Date.now()
-    });
+    //dummy account will send req to incoming userId
+    try{
+        /*
+        let dummyAccount = ["5c0a49437687954bdfe09228","5c0a49437687954bdfe09222",
+        "5c0a49437687954bdfe09223","5c0a49437687954bdfe09224"];
+        */
+       /*
+        var newReq1 = new FriendReq({
+            reqFromId : '5c0a49437687954bdfe09228',
+            reqToId :  req.params.userid,
+            isInterested : true,
+            reqDate : Date.now()
+        });
+        var newReq2 = new FriendReq({
+            reqFromId : '5c0a49437687954bdfe09222',
+            reqToId :  req.params.userid,
+            isInterested : true,
+            reqDate : Date.now()
+        });
+        var newReq3 = new FriendReq({
+            reqFromId : '5c0a49437687954bdfe09223',
+            reqToId :  req.params.userid,
+            isInterested : true,
+            reqDate : Date.now()
+        });
+        var newReq4 = new FriendReq({
+            reqFromId : '5c0a49437687954bdfe09224',
+            reqToId :  req.params.userid,
+            isInterested : true,
+            reqDate : Date.now()
+        });
+        */
 
-    newReq.save(function (err,results ) {
-        res.send(results);
-    });
+
+       var query = {
+            reqFromId : '5c0a49437687954bdfe09222',
+            reqToId :  req.param('userid'),
+       };
+       var newData = {
+            reqFromId : '5c0a49437687954bdfe09222',
+            reqToId :   req.param('userid'),
+            isInterested : true,
+            reqDate : Date.now()
+       };
+       FriendReq.findOneAndUpdate(query, newData, {upsert:true
+        , new: true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        else{
+            
+            res.send({result :"successed", msg: "No Error", info: {doc}});
+        }
+      
+        });
+
+
+        /*
+
+        for(var i = 0;i< dummyAccount.count;i++)
+        {  if(req.params.userid == dummyAccount[i])
+            { continue; }
+            var query = {};
+            var newReq = await new FriendReq({
+                reqFromId : dummyAccount[i],
+                reqToId :  req.params.userid,
+                isInterested : true,
+                reqDate : Date.now()
+            });
+            await newReq.save();
+        }
+     
+      
+        res.send("Dummy accounts have sent Friend Req to userId : "+ req.params.userid);
+        */
+    }catch(e){
+        res.send("Am error occured while pushing req!!");
+    }
+   
 })
 
 app.get('/TestGetFriendReq', (req,res)=>{
