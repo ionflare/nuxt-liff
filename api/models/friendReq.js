@@ -15,8 +15,8 @@ var FriendReq_Schema = new mongoose.Schema({
     reqToId:{
         type: String,
     },
-    reqToId:{
-        type: String,
+    isInterested:{
+        type: Boolean,
     },
     reqDate:{
         type: Date,

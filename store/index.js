@@ -21,6 +21,9 @@ const createStore = () => {
         search_age_min : null
       },
       otherUserProfile:[],
+      requestedList:[],
+      myNewReqList :[],
+      SwipeIdx : 1
 
     },
     mutations: {

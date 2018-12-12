@@ -9,7 +9,7 @@
 
                <br>
                <center>
-                   Found 1 Result
+                  Found 1 Result
                 <v-img width=200 height=200 :src="FilterFromSetting[0].ext_pictureUrl"></v-img>
                  </center>
                 <br>
@@ -30,24 +30,28 @@
                         </v-card>
                          <v-btn
                                     color="primary"
-
+                                     @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, true)"
                                 >
                                 Like
                                 </v-btn>
                                 <v-btn 
                                     color="red"
+                                     @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, false)"
                                 >
                                 Nope
                         </v-btn>
             </div>   
             <div v-if="FilterFromSetting.length > 1">
-                 Found {{FilterFromSetting.length}} Results 
-            <v-stepper v-model="e1">
+                  Found {{FilterFromSetting.length}} Results 
+                  <!--*****[ Step header work malfunction when use index = 0
+                  ,in v-for index start at 0 so it need to be modidied a little bit
+                  ]*********-->
+            <v-stepper v-model="$store.state.SwipeIdx">
                 <v-stepper-header v-show="false">
-                    <v-stepper-step v-for="(item, index) in FilterFromSetting" :key="item._id" :complete="e1 > index" :step="index"> {{item._id}}</v-stepper-step>
+                    <v-stepper-step v-for="(item, index) in FilterFromSetting"  :key="item._id" :step="index+1"> {{item._id}}</v-stepper-step>
                 </v-stepper-header>
                 <v-stepper-items>
-                    <v-stepper-content v-for="(item, index)  in FilterFromSetting" :key="item._id" :step="index">
+                    <v-stepper-content v-for="(item, index)  in FilterFromSetting" :key="item._id" :step="index+1">
                         <center>
                         <v-img width=200 height=200 :src="item.ext_pictureUrl"></v-img>
                         </center>
@@ -59,7 +63,8 @@
                         >   
                         
                         <center>
-                            Index : {{index}} 
+                            
+                            Index : {{index+1}} 
                             <br>Name : {{item.ext_displayName}} 
                             <br>Gender : {{item.gender}} 
                             <br>Age : {{item.age}} 
@@ -68,16 +73,17 @@
                         </center>
                         </v-card>
                         <v-layout>
-                            <v-flex v-if="index < FilterFromSetting.length -1">
+                             <!-- @click="e1 = index + 2"-->
+                            <v-flex v-if="index + 1 < FilterFromSetting.length">
                                 <v-btn
                                     color="primary"
-                                    @click="e1 = index + 1"
+                                    @click="makeFriendReq(item._id, index, true)"
                                 >
                                 Like
                                 </v-btn>
                                 <v-btn
                                     color="red"
-                                    @click="e1 = index + 1"
+                                     @click="makeFriendReq(item._id, index, false)"
                                 >
                                 Nope
                                 </v-btn>
@@ -85,13 +91,13 @@
                             <v-flex v-else>
                                 <v-btn
                                     color="primary"
-                                    @click="getOtherUserProfile()"
+                                    @click="makeFriendReqLastIdx(item._id, true)"
                                 >
                                 Like
                                 </v-btn>
                                 <v-btn 
                                     color="red"
-                                    @click="getOtherUserProfile()"
+                                    @click="makeFriendReqLastIdx(item._id, false)"
                                 >
                                 Nope
                                 </v-btn>
@@ -99,9 +105,10 @@
                         </v-layout>
                     </v-stepper-content>
                 </v-stepper-items>
+                
             </v-stepper>
             </div>
-            
+          
             
         </v-app>
     </div>
@@ -115,15 +122,26 @@ export default {
   //props: ['description', 'image', 'shopName', 'url', 'color', 'thumbnail']
   //prop: ['title', 'shopName', 'color']
   //props: ['e1'],
- 
+ /*
   data: () => ({
-    e1:0,
+    e1:3,
     timer: 25,
     message2: "",
     counter: false,
     interval: null,
     filteredOtherUser : [''],
   }),
+  */
+ data(){
+     return {
+        e1:1,
+        timer: 25,
+        message2: "",
+        counter: false,
+        interval: null,
+        filteredOtherUser : [''],
+     }
+ },
   methods: {
         startTimer() {
             this.interval = setInterval(this.countDown, 1000);
@@ -144,14 +162,17 @@ export default {
             }
         },
         async getOtherUserProfile(){
-            let data = await this.$axios.$post('/api/getAllUserInfo',{});
-            if(data.result == "successed")
-            {   let currentUserId = this.$store.state.currentUser._id;
-               
-
-                this.$store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o._id != currentUserId;});
-                
-                this.e1 =0;
+            let currentUserId = this.$store.state.currentUser._id;
+            let allUserProf = await this.$axios.$post('/api/getRequestedListById',{ currentUserId : currentUserId});
+          
+            if(allUserProf.result == "successed")
+            {  
+                 this.$store.state.otherUserProfile = [];
+                 this.$store.state.otherUserProfile = allUserProf.info.availableUser;
+                this.$store.state.requestedList = allUserProf.info.friendReq;
+                alert("555");
+                //this.e1 =1;
+                this.$store.state.SwipeIdx = 1;
             }
             else{
                 alert("Error occured while getting other user profile");  }
@@ -173,33 +194,76 @@ export default {
         deg2rad(deg) {
             return deg * (Math.PI/180)
         },
-        makeFriendReq(deg) {
-
-            
-            /*
-            let data = await this.$axios.$post('/api/makeFriendReq',{});
+        async makeFriendReqLastIdx(otherUserId,isInterested)
+        {
+            let data = await this.$axios.$post('/api/makeFriendReq',{
+                reqFromId : this.$store.state.currentUser._id,
+                reqToId : otherUserId,
+                isInterested : isInterested
+            });
             if(data.result == "successed")
-            {   let currentUserLinedId = this.$store.state.currentUser.line_userId;
+            {   
+                let currentUserId = this.$store.state.currentUser._id;
+                let allUserProf = await this.$axios.$post('/api/getRequestedListById',{ currentUserId : currentUserId});
+          
+                if(allUserProf.result == "successed")
+                {  
+                    this.$store.state.otherUserProfile = [];
+                    this.$store.state.otherUserProfile = allUserProf.info.availableUser;
+                    this.$store.state.requestedList = allUserProf.info.friendReq;
+                    alert("555");
                
-
-                this.$store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;});
-                
-                this.e1 =0;
+                    this.$store.state.SwipeIdx = 1;
+                }
             }
             else{
                 alert("Error occured while getting other user profile");  }
-            */
+
+        },
+        async makeFriendReq(otherUserId,SweptIdx,isInterested) {
+
+            let data = await this.$axios.$post('/api/makeFriendReq',{
+                reqFromId : this.$store.state.currentUser._id,
+                reqToId : otherUserId,
+                isInterested : isInterested
+            });
+            if(data.result == "successed")
+            {   
+                this.$store.state.SwipeIdx = SweptIdx + 2;
+            }
+            else{
+                alert("Error occured while getting other user profile");  }
+            
         }                 
 
   },
   computed : {
       FilterFromSetting: function(){
+          
+            // requested list will not be shown again
+            /*
+            let res_RequestedList = [];
+            for(let i =0; this.$store.state.otherUserProfile.length; i++)
+            {
+                for(let j =0; this.$store.state.requestedList.length; j++)
+                {
+                    if(this.$store.state.requestedList[j]._id !=  this.$store.state.otherUserProfile[i]._id)
+                    res_RequestedList.push(this.$store.state.otherUserProfile[i]);
+                }
+            }
+            */
+
+
+        
+
+           
             //Filter Gender
             let res_filterGender;
             let search_con = this.$store.state.currentUser.search_gender;
             if (this.$store.state.currentUser.search_gender == "Male" || this.$store.state.currentUser.search_gender == "Female")
             {
                  res_filterGender = _.filter(this.$store.state.otherUserProfile, 
+                 //res_filterGender = _.filter(this.$store.state.res_RequestedList, 
                  function(o) { return o.gender == search_con;});
             }
             else
@@ -231,8 +295,10 @@ export default {
                      res_filterDist.push(filteredUser);
                 }
             }
+            
             return res_filterDist;
         },
+       
   }
 }
 </script>

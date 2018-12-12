@@ -104,26 +104,110 @@ app.post('/getAllUserInfo', (req,res)=>{
         }
         else
         {
-            res.send({result :"successed", msg: "No Error", info: {alluser}});
+            res.send({result :"successed", msg: "No Error", info: alluser});
         }
      });
 })
 
-app.post('/makeFriendReq', (req,res)=>{
 
+app.post('/getAvailableUser', (req,res)=>{
+    FriendReq.find(
+        {
+             $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
+                { 'reqToId': new ObjectId(req.body.currentUserId) } ] 
+        } ).then((reqList)=>{ 
+ 
+            //filter 
+            res.send({result :"successed", msg: "No Error", info: reqList});
+
+        });
     UserInfo.find({ 
-        //findall
+        $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
+                { 'reqToId': new ObjectId(req.body.currentUserId) } ] 
      }).then((alluser)=>{ 
         if(!alluser){
             res.send({result :"failed", msg: "Error!!", info: { }});
         }
         else
         {
-            res.send({result :"successed", msg: "No Error", info: {alluser}});
+            res.send({result :"successed", msg: "No Error", info: alluser});
         }
      });
 })
 
+
+app.post('/getRequestedListById', async(req,res)=>{
+    try{
+        let friendList = await FriendReq.find(
+            { $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
+                    { 'reqToId': new ObjectId(req.body.currentUserId) } ]  });
+        let storeReqList = [req.body.currentUserId];    
+        
+        for(let i = 0; i< friendList.length; i++)
+        {
+            if(friendList[i].reqFromId == req.body.currentUserId)
+            {  storeReqList.push( friendList[i].reqToId ); 
+            }
+            else
+            {  storeReqList.push( friendList[i].reqFromId );
+            } 
+        }
+        
+        let availableUser = await UserInfo.find(
+            { _id: { $nin: storeReqList }});
+        let friendReq = await UserInfo.find(
+                { _id: { $in: storeReqList }});
+           
+        res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq}});           
+
+    }
+    catch(e)
+    { res.send({result :"failed", msg: "Error", info: {e}}); }
+    
+})
+
+
+
+app.post('/makeFriendReq', (req,res)=>{
+
+    let newReq = new FriendReq({
+        reqFromId : req.body.reqFromId,
+        reqToId : req.body.reqToId,
+        isInterested : req.body.isInterested,
+        reqDate : Date.now()
+    });
+
+    newReq.save(function (err) {
+        res.send({result :"successed"});
+    });
+})
+
+
+app.get('/TestFriendReq', (req,res)=>{
+
+    let newReq = new FriendReq({
+        reqFromId : '5c0a518f7687954bdfe0a4e6',
+        reqToId : '5c0a49437687954bdfe09228',
+        isInterested : true,
+        reqDate : Date.now()
+    });
+
+    newReq.save(function (err,results ) {
+        res.send(results);
+    });
+})
+
+app.get('/TestGetFriendReq', (req,res)=>{
+
+    FriendReq.find(
+        {
+             $or: [ { 'reqFromId': new ObjectId('5c0a49437687954bdfe09228') }, 
+                { 'reqToId': new ObjectId('5c0a49437687954bdfe09228') } ] 
+        } 
+    ).then((reqList)=>{ 
+        res.send(reqList);
+    })
+});
 
 
 

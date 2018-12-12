@@ -21,7 +21,7 @@
       
           <v-tab href="#tab-3" @click="setTab(3)" >
             Swipe
-            <v-icon>favorite</v-icon>
+            <v-icon>favorite</v-icon> 
           </v-tab>
 
            <v-tab href="#tab-4" @click="setTab(4)" >
@@ -51,10 +51,8 @@
           </v-tab-item>
 
       </v-tabs>
-
+      {{$store.state.requestedList}}
       </v-layout>
-      
-
     </v-container>
   </v-app>
 </template>
@@ -85,7 +83,7 @@ export default {
   */
   data () {
     return {
-   
+      testVar: '',
       bottomNav: 'profile',
       currentTab : 1,
       //otherUserProfile : ['']
@@ -113,20 +111,11 @@ export default {
       }
     },
    async asyncData(context){
-     //let currentUserLinedId = context.store.state.currentUser.line_userId;
-     let currentUserId = context.store.state.currentUser._id;
-     let data = await context.app.$axios.$post('/api/getAllUserInfo');
-     context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o._id != currentUserId;})
-     //let data = await context.app.$axios.$post('/api/getFriendReqById',{ userId :  line_userId});
-     
+      let currentUserId = context.store.state.currentUser._id;
+      let allUserProf = await context.app.$axios.$post('/api/getRequestedListById',{ currentUserId : currentUserId});
+      context.store.state.otherUserProfile = allUserProf.info.availableUser;
+      context.store.state.requestedList = allUserProf.info.friendReq;
 
-     /*
-    return context.app.$axios.$post('/api/getAllUserInfo')
-    .then(data =>{
-      //context.store.state.otherUserProfile = _.filter(data.info.alluser, function(o) { return o.line_userId != currentUserLinedId;})
-      _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
-    }).catch(e => context.error(e));
-    */
   }
 }
 </script>

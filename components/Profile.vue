@@ -1,6 +1,4 @@
 <template>
-
-
   <div>
      <v-card>
         <v-container
@@ -9,7 +7,6 @@
         >
           <v-layout row wrap
           >    
-          {{$store.state.currentUser.ext_displayName}}  
        <v-flex xs12>
               <v-card color="cyan darken-2" class="white--text">
                 <v-layout>
