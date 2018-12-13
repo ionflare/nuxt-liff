@@ -137,32 +137,70 @@ app.post('/getAvailableUser', (req,res)=>{
 
 app.post('/getRequestedListById', async(req,res)=>{
     try{
-        let friendList = await FriendReq.find(
+        let reqRelateUser = await FriendReq.find(
             { $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
                     { 'reqToId': new ObjectId(req.body.currentUserId) } ]  });
+        // storeAllReqList ignore whether users are interested or not            
         let storeAllReqList = [req.body.currentUserId];    
         let storeReqFromOtherUser =  [];    
-        for(let i = 0; i< friendList.length; i++)
+        let storeMyReqList =  [];
+        let storeRejectList =  [];
+          
+        for(let i = 0; i< reqRelateUser.length; i++)
         {
-            if(friendList[i].reqFromId == req.body.currentUserId)
-            {  storeAllReqList.push( friendList[i].reqToId ); 
-            }
-            else
-            {  storeAllReqList.push( friendList[i].reqFromId );
-                if(friendList[i].isInterested == true)
+            if(reqRelateUser[i].reqFromId == req.body.currentUserId)
+            {  storeAllReqList.push( reqRelateUser[i].reqToId ); 
+                if(reqRelateUser[i].isInterested == true)
                 {
-                    storeReqFromOtherUser.push( friendList[i].reqFromId );
+                    storeMyReqList.push( reqRelateUser[i].reqToId ); 
+                }
+                else{
+                    storeRejectList.push( reqRelateUser[i].reqToId ); 
                 }
                 
+            }
+            else
+            {  storeAllReqList.push( reqRelateUser[i].reqFromId );
+                if(reqRelateUser[i].isInterested == true)
+                {
+                    storeReqFromOtherUser.push( reqRelateUser[i].reqFromId );
+                }
+                else{
+                    storeRejectList.push( reqRelateUser[i].reqFromId ); 
+                }
             } 
         }
         
+        //let storeMyFriendList =  [];    
+        //find Isinterested intersection between users.
+        let storeMyFriendList = storeMyReqList.filter(function(n) {
+            return storeReqFromOtherUser.indexOf(n) > -1;
+          });
+        
+        let storeFriendReq = storeReqFromOtherUser.filter(function(n) {
+            return storeRejectList.indexOf(n) === -1;
+          });
+        
+        storeFriendReq = storeFriendReq.filter(function(n) {
+            return storeMyFriendList.indexOf(n) === -1;
+          });
+          
         let availableUser = await UserInfo.find(
             { _id: { $nin: storeAllReqList }});
+        
         let friendReq = await UserInfo.find(
-                { _id: { $in: storeReqFromOtherUser }});
-           
-        res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq}});           
+                { _id: { $in: storeFriendReq }});
+        
+        let friendList = await UserInfo.find(
+            { _id: { $in: storeMyFriendList }});
+        
+                /*
+        //find other user that current user is interested.
+        let friendReq = await UserInfo.find(
+            { _id: { $in: storeReqFromOtherUser }});
+        */   
+            
+        res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq , friendList}});           
 
     }
     catch(e)
@@ -186,6 +224,15 @@ app.post('/makeFriendReq', (req,res)=>{
     });
 })
 
+app.post('/clearAllReq', (req,res)=>{
+
+    FriendReq.remove({}, function (err) {
+        if(err)
+        {   res.send({result :"failed"}); }
+        else 
+        {   res.send({result :"successed"}); }
+    });
+});
 
 app.get('/testAddFriendReq', async (req,res)=>{
 

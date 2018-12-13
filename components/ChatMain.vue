@@ -6,26 +6,28 @@
           dark
           icons-and-text>
           <v-tabs-slider color="yellow"></v-tabs-slider>
+
+          <v-tab>
+            List
+            <v-icon>list</v-icon>
+          </v-tab>
+      
       
           <v-tab>
             Request
-            <v-icon>account_box</v-icon>
+            <v-icon>notification_important</v-icon>
           </v-tab>
       
-          <v-tab>
-            Chatbox
-            <v-icon>settings</v-icon>
-          </v-tab>
-      
+          
+          <v-tab-item >
+            <ChatRoom/>
+          </v-tab-item>
          
           
           <v-tab-item  >
             <ChatRequest/>
           </v-tab-item>
 
-          <v-tab-item >
-            <ChatRoom/>
-          </v-tab-item>
          
 
         </v-tabs>

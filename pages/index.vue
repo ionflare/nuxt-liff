@@ -27,8 +27,20 @@
                 <div>bla bla bla <br>Some advertisment here</div>
            
           </v-card-title>
-            <v-btn  color="primary" dark  @click="onWebLogin()">GO TO DATING APP</v-btn>
-        
+            <v-btn  color="primary" dark  @click="onWebLogin()"> --> GO TO DATING APP <-- </v-btn>
+            <br>
+            If you cannot open button above, scan Qr code below then Select Dating App (nuxt-liff).
+            <br>
+            <v-img src="https://www.picz.in.th/images/2018/10/11/kupKlb.png"  height="100px" width="100px"></v-img>
+            <br>
+            Test Zone
+             <br>
+            <v-btn  color="green" dark  @click="DummyLogin(0)">(Test) Dummy 1 Login</v-btn>
+            <v-btn  color="green" dark  @click="DummyLogin(1)">(Test) Dummy 2 Login</v-btn>
+            <v-btn  color="green" dark  @click="DummyLogin(2)">(Test) Dummy 3 Login</v-btn>
+            <v-btn  color="green" dark  @click="DummyLogin(3)">(Test) Dummy 4 Login</v-btn>
+            <br>
+            <v-btn  color="red" dark  @click="ClearAllReq()">(Test) Clear All Friend Req</v-btn>
         
         
           </div>
@@ -39,7 +51,7 @@
 
     </v-container>
     
-    <div style="display: block;">
+    <div style="display: none;">
       <div id="profileinfo">
        location = <div id="latitude"></div><div id="longitude"></div>
         <br>
@@ -120,40 +132,15 @@ export default {
     },
     
     methods : {
-        alertProfile(){
-          //alert(document.getElementById('displaynamefield').textContent);
-          //this.$store.state.current_user.user_id
-
-          /*
-           this.$store.state.currentUser.displayName = document.getElementById('displaynamefield').textContent;
-           this.$store.state.currentUser.lineId = document.getElementById('useridprofilefield').textContent;
-           this.$store.state.currentUser.pictureUrl = document.getElementById('profilepicturediv').src;
-           this.$store.state.currentUser.statusMessege = document.getElementById('statusmessagefield').textContent;
-           this.$store.state.currentUser.latitude = document.getElementById('latitude').textContent;
-           this.$store.state.currentUser.longitude = document.getElementById('longitude').textContent;
-            */
-           //this.$store.commit('init_user', '555xx');
-           //location.href = "./main";
-
-
-
-
-          /*
-          if((this.$store.state.currentUser.latitude != "") && (this.$store.state.currentUser.longitude != ""))
-          {
-            location.href = "./main";
-            //alert("Please turn on your GPS");
-          }
-          else{
-            alert("Please turn on your GPS");
-          }
-         */
+        async ClearAllReq(){
+            let data = await this.$axios.$post('/api/clearAllReq');
+            alert(data.result);
         },
          async onWebLogin(context){
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != ""
           //&& document.getElementById('useridprofilefield').textContent != "")
           //if(document.getElementById('latitude').textContent != "" && document.getElementById('longitude').textContent != "")
-          if(1)
+          if(document.getElementById('useridprofilefield').textContent != "")
           {
             try{
 
@@ -172,15 +159,6 @@ export default {
                     ext_statusMessege = document.getElementById('statusmessagefield').textContent;
                 
                 }
-                else{
-                    loginMethod = 'testMehod';
-                    ext_userId = "TestUser1";
-                    ext_displayName = "TestUser1";
-                    ext_pictureUrl = "https://d3icht40s6fxmd.cloudfront.net/sites/default/files/test-product-test.png";
-                    ext_statusMessege = "Hello Tester";
-                    alertMsg = "Welcome Tester";
-                }
-
                 var latitude = document.getElementById('latitude').textContent;
                 var longitude = document.getElementById('longitude').textContent;
                 
@@ -194,7 +172,7 @@ export default {
                 //alert(ext_pictureUrl);
                 
                 let data = await this.$axios.$post('/api/app_login',
-                {
+                {   
                     currentUser :
                     {
                     'loginMethod' : loginMethod,    
@@ -205,7 +183,6 @@ export default {
                     'latitude' : latitude,
                     'longitude' : longitude,
                     } 
-                    
                 });
                     if(data == "succesfully saved")
                     {
@@ -229,12 +206,98 @@ export default {
         
             }
             else{
-                alert("ERROR : Please check your GPS or line account!!")
+                alert("ERROR : This function can be run only in line application!!")
+            }
+        },
+        async DummyLogin(dummyAcc){
+       
+           try{
+
+                var loginMethod = "";
+                var ext_userId = "";
+                var ext_displayName = "";
+                var ext_pictureUrl = "";
+                var ext_statusMessege = "";
+                var alertMsg ="";
+                
+                var AllDummy = [
+                    {
+                        loginMethod : 'testMehod',
+                        ext_userId : "TestUser1",
+                        ext_displayName : "TestUser1",
+                        ext_pictureUrl : "https://d3icht40s6fxmd.cloudfront.net/sites/default/files/test-product-test.png",
+                        ext_statusMessege : "Hello Tester",
+                        alertMsg : "Welcome Tester",
+                    },
+                    {
+                        loginMethod : 'testMehod',
+                        ext_userId : "TestUser2",
+                        ext_displayName : "TestUser2",
+                        ext_pictureUrl : "http://66.media.tumblr.com/8ade1f2d6f9ba47980ca4a82febc089a/tumblr_mezcrofyv61rfnwv0o1_400.jpg",
+                        ext_statusMessege : "Hello Tester",
+                        alertMsg : "Welcome Tester",
+                    },
+                    {
+                        ext_userId : "TestUser3",
+                        loginMethod : "testMehod",
+                        ext_displayName : "TestUser3",
+                        ext_pictureUrl : "http://66.media.tumblr.com/d0aa042ae2efc069c9d9ee5e4f49cfb4/tumblr_mezcrofyv61rfnwv0o4_500.jpg",
+                        ext_statusMessege : "Hello Tester",
+                        alertMsg : "Welcome Tester",
+                    },
+                    {
+                        ext_userId : "TestUser4",
+                        loginMethod : "testMehod",
+                        ext_displayName : "TestUser4",
+                        ext_pictureUrl : "http://25.media.tumblr.com/a3d4499d69f2863ee2e834d5c52eb4c0/tumblr_mezcrofyv61rfnwv0o2_400.jpg",
+                        ext_statusMessege : "Hello Tester",
+                        alertMsg : "Welcome Tester",
+                    }
+                ]
+                var latitude = document.getElementById('latitude').textContent;
+                var longitude = document.getElementById('longitude').textContent;
+                
+                if(latitude == "" || longitude == "")
+                {
+                    latitude = 13.908593;
+                    longitude = 100.501541;
+                    alertMsg += "Your Location Info did not set properly Please check your gps!!"; 
+                }
+
+                //alert(ext_pictureUrl);
+                
+                let data = await this.$axios.$post('/api/app_login',
+                {   
+                    currentUser :
+                    {
+                    'loginMethod' : AllDummy[dummyAcc].loginMethod,    
+                    'ext_userId' : AllDummy[dummyAcc].ext_userId,
+                    'ext_displayName' :AllDummy[dummyAcc].ext_displayName,
+                    'ext_pictureUrl' : AllDummy[dummyAcc].ext_pictureUrl,
+                    'ext_statusMessege' : AllDummy[dummyAcc].ext_statusMessege,
+                    'latitude' : latitude,
+                    'longitude' : longitude,
+                    } 
+                });
+                    if(data == "succesfully saved")
+                    {
+                
+                    //this.$store.commit('set_current_user', data.data);
+                    if(alertMsg != "")
+                    {
+                        alert("Welcome Tester");
+                    }
+                    location.href = "./main";
+                   
+                    }
+                    else{
+                        alert(data.msg);
+                    }
+                    
+            }catch(e){
+                console.log(e);
             }
         }
-
-         
-       
     }
 }
 </script>

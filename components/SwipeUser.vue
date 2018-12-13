@@ -1,118 +1,123 @@
 <template>
     <div id="app">
         <v-app id="inspire">
-           <!-- {{FilterFromSetting}} -->
-           <div v-if="FilterFromSetting.length == 0">
-               Found no Result. Please check your setting and try again.
-            </div>   
-           <div v-if="FilterFromSetting.length == 1">
-
-               <br>
-               <center>
-                  Found 1 Result
-                <v-img width=200 height=200 :src="FilterFromSetting[0].ext_pictureUrl"></v-img>
-                 </center>
-                <br>
-                <v-card
-                            class="mb-5"
-                            color="grey lighten-1"
-                            height="100px"
-                        >   
-                        <center>
-                            Index : 0
-                            <br>Name : {{FilterFromSetting[0].ext_displayName}} 
-                            <br>Gender : {{FilterFromSetting[0].gender}} 
-                            <br>Age : {{FilterFromSetting[0].age}} 
-                            <br>Distance : {{FilterFromSetting[0].dist}} KM.
-                            
-                        </center>
-                        
-                        </v-card>
-                         <v-btn
-                                    color="primary"
-                                     @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, true)"
-                                >
-                                Like
-                                </v-btn>
-                                <v-btn 
-                                    color="red"
-                                     @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, false)"
-                                >
-                                Nope
-                        </v-btn>
-            </div>   
-            <div v-if="FilterFromSetting.length > 1">
-                  Found {{FilterFromSetting.length}} Results 
-                  <!--*****[ Step header work malfunction when use index = 0
-                  ,in v-for index start at 0 so it need to be modidied a little bit
-                  ]*********-->
-            <v-stepper v-model="$store.state.SwipeIdx">
-                <v-stepper-header v-show="false">
-                    <v-stepper-step v-for="(item, index) in FilterFromSetting"  :key="item._id" :step="index+1"> {{item._id}}</v-stepper-step>
-                </v-stepper-header>
-                <v-stepper-items>
-                    <v-stepper-content v-for="(item, index)  in FilterFromSetting" :key="item._id" :step="index+1">
-                        <center>
-                        <v-img width=200 height=200 :src="item.ext_pictureUrl"></v-img>
-                        </center>
-                        <br> 
-                         <v-card
-                            class="mb-5"
-                            color="grey lighten-1"
-                            height="100px"
-                        >   
-                        
-                        <center>
-                            
-                            Index : {{index+1}} 
-                            <br>Name : {{item.ext_displayName}} 
-                            <br>Gender : {{item.gender}} 
-                            <br>Age : {{item.age}} 
-                            <br>Distance : {{item.dist}} KM.
-                            
-                        </center>
-                        </v-card>
-                        <v-layout>
-                             <!-- @click="e1 = index + 2"-->
-                            <v-flex v-if="index + 1 < FilterFromSetting.length">
-                                <v-btn
-                                    color="primary"
-                                    @click="makeFriendReq(item._id, index, true)"
-                                >
-                                Like
-                                </v-btn>
-                                <v-btn
-                                    color="red"
-                                     @click="makeFriendReq(item._id, index, false)"
-                                >
-                                Nope
-                                </v-btn>
-                            </v-flex>
-                            <v-flex v-else>
-                                <v-btn
-                                    color="primary"
-                                    @click="makeFriendReqLastIdx(item._id, true)"
-                                >
-                                Like
-                                </v-btn>
-                                <v-btn 
-                                    color="red"
-                                    @click="makeFriendReqLastIdx(item._id, false)"
-                                >
-                                Nope
-                                </v-btn>
-                            </v-flex>
-                        </v-layout>
-                    </v-stepper-content>
-                </v-stepper-items>
-                
-            </v-stepper>
+             <div v-if="$store.state.currentUser.gender == null || $store.state.currentUser.age == null 
+              || $store.state.currentUser.search_gender == null || $store.state.currentUser.search_distance_max == null 
+              || $store.state.currentUser.search_age_max == null || $store.state.currentUser.search_age_min == null ">
+                 Please fill your profile information and config setting in order to use this feature. 
             </div>
-          
+            <div v-else>
+            <div v-if="FilterFromSetting.length == 0">
+                No available user in this area. Why not try to change Setting.
+                </div>   
+            <div v-if="FilterFromSetting.length == 1">
+
+                <br>
+                <center>
+                    Found 1 Result
+                    <v-img width=200 height=200 :src="FilterFromSetting[0].ext_pictureUrl"></v-img>
+                    </center>
+                    <br>
+                    <v-card
+                                class="mb-5"
+                                color="grey lighten-1"
+                                height="100px"
+                            >   
+                            <center>
+                                Index : 0
+                                <br>Name : {{FilterFromSetting[0].ext_displayName}} 
+                                <br>Gender : {{FilterFromSetting[0].gender}} 
+                                <br>Age : {{FilterFromSetting[0].age}} 
+                                <br>Distance : {{FilterFromSetting[0].dist}} KM.
+                                
+                            </center>
+                            
+                            </v-card>
+                            <v-btn
+                                        color="primary"
+                                        @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, true)"
+                                    >
+                                    Like
+                                    </v-btn>
+                                    <v-btn 
+                                        color="red"
+                                        @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, false)"
+                                    >
+                                    Nope
+                            </v-btn>
+                </div>   
+                <div v-if="FilterFromSetting.length > 1">
+                    Found {{FilterFromSetting.length}} Results 
+                    <!--*****[ Step header work malfunction when use index = 0
+                    ,in v-for index start at 0 so it need to be modidied a little bit
+                    ]*********-->
+                <v-stepper v-model="$store.state.SwipeIdx">
+                    <v-stepper-header v-show="false">
+                        <v-stepper-step v-for="(item, index) in FilterFromSetting"  :key="item._id" :step="index+1"> {{item._id}}</v-stepper-step>
+                    </v-stepper-header>
+                    <v-stepper-items>
+                        <v-stepper-content v-for="(item, index)  in FilterFromSetting" :key="item._id" :step="index+1">
+                            <center>
+                            <v-img width=200 height=200 :src="item.ext_pictureUrl"></v-img>
+                            </center>
+                            <br> 
+                            <v-card
+                                class="mb-5"
+                                color="grey lighten-1"
+                                height="100px"
+                            >   
+                            
+                            <center>
+                                
+                                Index : {{index+1}} 
+                                <br>Name : {{item.ext_displayName}} 
+                                <br>Gender : {{item.gender}} 
+                                <br>Age : {{item.age}} 
+                                <br>Distance : {{item.dist}} KM.
+                                
+                            </center>
+                            </v-card>
+                            <v-layout>
+                                <!-- @click="e1 = index + 2"-->
+                                <v-flex v-if="index + 1 < FilterFromSetting.length">
+                                    <v-btn
+                                        color="primary"
+                                        @click="makeFriendReq(item._id, index, true)"
+                                    >
+                                    Like
+                                    </v-btn>
+                                    <v-btn
+                                        color="red"
+                                        @click="makeFriendReq(item._id, index, false)"
+                                    >
+                                    Nope
+                                    </v-btn>
+                                </v-flex>
+                                <v-flex v-else>
+                                    <v-btn
+                                        color="primary"
+                                        @click="makeFriendReqLastIdx(item._id, true)"
+                                    >
+                                    Like
+                                    </v-btn>
+                                    <v-btn 
+                                        color="red"
+                                        @click="makeFriendReqLastIdx(item._id, false)"
+                                    >
+                                    Nope
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </v-stepper-content>
+                    </v-stepper-items>
+                    
+                </v-stepper>
+                </div>
+            </div>
             
         </v-app>
     </div>
-
+    
 
 
 </template>
@@ -170,7 +175,6 @@ export default {
                  this.$store.state.otherUserProfile = [];
                  this.$store.state.otherUserProfile = allUserProf.info.availableUser;
                 this.$store.state.requestedList = allUserProf.info.friendReq;
-                alert("555");
                 //this.e1 =1;
                 this.$store.state.SwipeIdx = 1;
             }

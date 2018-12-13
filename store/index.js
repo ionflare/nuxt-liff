@@ -22,7 +22,7 @@ const createStore = () => {
       },
       otherUserProfile:[],
       requestedList:[],
-      myNewReqList :[],
+      myFriendList :[],
       SwipeIdx : 1
 
     },

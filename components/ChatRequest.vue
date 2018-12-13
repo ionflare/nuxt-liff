@@ -10,7 +10,7 @@
         <v-card>
           
          
-          <v-list two-line>
+      <v-list two-line>
             <template v-for="(item, index) in genReqList" 
                >
               <v-list-tile  
@@ -26,12 +26,12 @@
                 </v-list-tile-content>
                  <v-btn color="green" 
                  fab small dark
-                 @click="acceptReq(item.ext_displayName)">
+                 @click="acceptReq(item)">
                     <v-icon>check</v-icon>
                 </v-btn>
                 <v-btn color="red" 
                 fab small dark
-                @click="rejectReq(item.ext_displayName)">
+                @click="rejectReq(item)">
                     <v-icon>close</v-icon>
                 </v-btn>
                  
@@ -42,7 +42,6 @@
           
         </v-card>
       </v-flex>
-     
     </v-layout>
   </div>
   <div v-else> You have no friends' request.
@@ -51,8 +50,9 @@
 <script>
 export default
 {
-    data(){
+  data(){
     return {
+  
     }
   },
   computed :{
@@ -60,7 +60,6 @@ export default
     genReqList : function(){
       
        let currentUserId = this.$store.state.currentUser._id;
-       let friendReqList = [];
        return _.filter(this.$store.state.requestedList, function(x){
          return x._id != currentUserId;
        });
@@ -71,11 +70,40 @@ export default
     }
   },
   methods:{
-      acceptReq: (otherUserID)=> {
-           alert("Accept Friend Req from "+ otherUserID);
+      async acceptReq(otherUser){
+           
+            let data = await this.$axios.$post('/api/makeFriendReq',{
+                reqFromId : this.$store.state.currentUser._id,
+                reqToId : otherUser._id,
+                isInterested : true
+            });
+            if(data.result == "successed")
+            {   
+                this.$store.state.requestedList = _.filter(this.$store.state.requestedList, function(x){
+                return x._id != otherUser._id;});
+                this.$store.state.myFriendList.push(otherUser);
+            }
+            else{
+                alert("Error occured while getting other user profile");  
+            }
+        
+         
       },
-      rejectReq: (otherUserID)=> {
-           alert("Reject Friend Req from "+ otherUserID);
+      async rejectReq(otherUser){
+            let data = await this.$axios.$post('/api/makeFriendReq',{
+                reqFromId : this.$store.state.currentUser._id,
+                reqToId : otherUser._id,
+                isInterested : false
+            });
+            if(data.result == "successed")
+            {   
+                this.$store.state.requestedList = _.filter(this.$store.state.requestedList, function(x){
+                return x._id != otherUser._id;});
+                
+            }
+            else{
+                alert("Error occured while getting other user profile");  
+            }
       },
       
   }

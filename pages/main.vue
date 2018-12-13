@@ -26,7 +26,7 @@
 
            <v-tab href="#tab-4" @click="setTab(4)" >
             Friends
-            <v-icon>location_on</v-icon>
+            <v-icon>supervisor_account</v-icon>
           </v-tab>
           
           <v-tab-item  id="tab-1"
@@ -115,6 +115,7 @@ export default {
       let allUserProf = await context.app.$axios.$post('/api/getRequestedListById',{ currentUserId : currentUserId});
       context.store.state.otherUserProfile = allUserProf.info.availableUser;
       context.store.state.requestedList = allUserProf.info.friendReq;
+      context.store.state.myFriendList = allUserProf.info.friendList;
 
   }
 }
