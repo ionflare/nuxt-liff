@@ -4,6 +4,10 @@ const createStore = () => {
   return new Vuex.Store({
 
     state: {
+      windowSize: {
+        x: 0,
+        y: 0
+      },
       currentUser:{
         _id : null,
         loginMethod : null,

@@ -24,7 +24,7 @@
                                 height="100px"
                             >   
                             <center>
-                                Index : 0
+                                Index : 1
                                 <br>Name : {{FilterFromSetting[0].ext_displayName}} 
                                 <br>Gender : {{FilterFromSetting[0].gender}} 
                                 <br>Age : {{FilterFromSetting[0].age}} 
@@ -34,10 +34,16 @@
                             
                             </v-card>
                             <v-btn
-                                        color="primary"
+                                        color="green"
                                         @click="makeFriendReqLastIdx(FilterFromSetting[0]._id, true)"
                                     >
                                     Like
+                                    </v-btn>
+                                      <v-btn
+                                        color="blue"
+                                        @click="PassUserLastIdx(index)"
+                                    >
+                                    Decide Later
                                     </v-btn>
                                     <v-btn 
                                         color="red"
@@ -81,10 +87,16 @@
                                 <!-- @click="e1 = index + 2"-->
                                 <v-flex v-if="index + 1 < FilterFromSetting.length">
                                     <v-btn
-                                        color="primary"
+                                        color="green"
                                         @click="makeFriendReq(item._id, index, true)"
                                     >
                                     Like
+                                    </v-btn>
+                                     <v-btn
+                                        color="blue"
+                                        @click="PassUser(index)"
+                                    >
+                                    Decide Later
                                     </v-btn>
                                     <v-btn
                                         color="red"
@@ -95,11 +107,18 @@
                                 </v-flex>
                                 <v-flex v-else>
                                     <v-btn
-                                        color="primary"
+                                        color="green"
                                         @click="makeFriendReqLastIdx(item._id, true)"
                                     >
                                     Like
                                     </v-btn>
+                                     <v-btn
+                                        color="blue"
+                                        @click="PassUserLastIdx(index)"
+                                    >
+                                    Decide Later
+                                    </v-btn>
+
                                     <v-btn 
                                         color="red"
                                         @click="makeFriendReqLastIdx(item._id, false)"
@@ -215,8 +234,7 @@ export default {
                     this.$store.state.otherUserProfile = [];
                     this.$store.state.otherUserProfile = allUserProf.info.availableUser;
                     this.$store.state.requestedList = allUserProf.info.friendReq;
-                    alert("555");
-               
+                
                     this.$store.state.SwipeIdx = 1;
                 }
             }
@@ -238,7 +256,16 @@ export default {
             else{
                 alert("Error occured while getting other user profile");  }
             
-        }                 
+        },
+        PassUser(SweptIdx) {
+
+            this.$store.state.SwipeIdx = SweptIdx + 2;
+        },
+        PassUserLastIdx(SweptIdx) {
+
+            this.$store.state.SwipeIdx = 1;
+        }
+
 
   },
   computed : {

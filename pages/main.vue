@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-container>  
-      <v-layout row>
+      <v-layout row justify-center>
         <v-tabs
           centered
           color="cyan"
@@ -83,16 +83,22 @@ export default {
   */
   data () {
     return {
-      testVar: '',
+      
       bottomNav: 'profile',
       currentTab : 1,
       //otherUserProfile : ['']
+      windowSize: {
+        x: 0,
+        y: 0
+      }
     }
   },
    components:{
       Profile, SwipeUser, Settings, ChatMain
   },
-  
+  mounted () {
+    this.onResize()
+  },
   computed:{
         getProp(){
            
@@ -108,6 +114,9 @@ export default {
     methods : {
       setTab(inputTab){
         this.currentTab = inputTab;
+      },
+      onResize () {
+      this.$store.state.windowSize = { x: window.innerWidth, y: window.innerHeight }
       }
     },
    async asyncData(context){
