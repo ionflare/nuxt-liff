@@ -1,5 +1,8 @@
-var mongoose = require("mongoose")
-var Message = mongoose.model("Message", {
+var mongoose = require("mongoose");
+
+
+
+var Message_Schema = new mongoose.Schema({
   //--From sender
   from_UserId: { type: String, require: true },
   //from_UserId: { type: mongoose.Schema.Types.ObjectId, require: true },
@@ -20,4 +23,6 @@ var Message = mongoose.model("Message", {
   //-- lastupdate
   lastupdate: { type: Date, default: Date.now }
 })
-module.exports = { Message }
+var Message = mongoose.model('message', Message_Schema);
+module.exports = { Message };
+

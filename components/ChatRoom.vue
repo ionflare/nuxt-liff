@@ -40,7 +40,7 @@
                  
                  
               </v-list-tile>
-              <v-divider  :key="index" :divider="true" :inset="true"></v-divider>
+              <v-divider></v-divider>
             </template>
           </v-list>
           
@@ -56,15 +56,63 @@
         <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
         -->
         <v-card>
-          <v-card-title>Contact with {{contactUser}}</v-card-title>
+          <v-card-title>Contact with {{contactUser.ext_displayName}}
+            <v-avatar
+                                      :tile="false"
+                                      :size="40"
+                                      color="grey lighten-4"
+                                    >
+                                <img :src="contactUser.ext_pictureUrl" alt="avatar">
+            </v-avatar>
+
+
+          </v-card-title>
           <v-divider></v-divider>
           <v-card-text :style="calSizeChatDialog.txtY" >
-            
+            <v-container grid-list-md text-xs-center>
+              <div v-for="(msg, indexMsg) in dialogMsg" :key="indexMsg">
+                   <v-layout v-if="msg.from_UserId == $store.state.currentUser._id"  align-end justify-end row >
+                    {{convertTime(msg.lastupdate)}}
+                    <v-flex md6>
+                        <v-card dark color="green">
+                          <v-card-text class="text-md-right">{{msg.text}}</v-card-text>
+                        </v-card>
+                   
+                    </v-flex>
+                   
+                    
+                  </v-layout>
+         
+                <v-layout v-else align-end justify-start row >
+                  <v-flex md1>
+                    <v-avatar
+                                      :tile="false"
+                                      :size="40"
+                                      color="grey lighten-4"
+                                    >
+                                <img :src="contactUser.ext_pictureUrl" alt="avatar">
+                      </v-avatar>
+                    </v-flex>
+                     <v-flex md6>
+                        <v-card  dark color="blue">
+                          <v-card-text   class="text-md-left">{{msg.text}}</v-card-text>
+                        </v-card>
+                   
+                    </v-flex>
+                    {{convertTime(msg.lastupdate) }}
+                </v-layout>
+            </div>
+            </v-container>    
           </v-card-text>
+           <v-divider></v-divider>
+           <v-card-text style="height:100px" >
+              <v-text-field v-model="myMsg"  label=""></v-text-field>
+          </v-card-text>
+          
           <v-divider></v-divider>
           <v-card-actions>
             <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="sendMsg(contactUser)">Send</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -87,8 +135,10 @@ export default
    data(){
     return {
          dialogm1: '',
+         dialogMsg : '',
         dialog: false,
         contactUser :'',
+        myMsg: ''
     }
   },
   computed :{
@@ -100,7 +150,7 @@ export default
       if(this.$store.state.windowSize.y < 500 )
       { 
         dialogSize.y = this.$store.state.windowSize.y;
-        dialogSize.txtY = "height:"+(this.$store.state.windowSize.y -100).toString()+"px";
+        dialogSize.txtY = "height:"+(this.$store.state.windowSize.y -150).toString()+"px";
       }
 
       return dialogSize;
@@ -108,25 +158,50 @@ export default
     },
 
     genFriendList : function(){
-        /*
-       let currentUserId = this.$store.state.currentUser._id;
-       return _.filter(this.$store.state.requestedList, function(x){
-         return x._id != currentUserId;
-       });
-       */
+  
       return this.$store.state.myFriendList;
-       
-      //return this.$store.state.requestedList;
-      //return _.orderBy(this.$store.state.requestedList, function(o) { return new moment(o.date).format('YYYYMMDD'); }, ['desc']);
-      //return _.orderBy(this.$store.state.requestedList, ['reqDate']); 
     }
   },
   methods:{
-    openChatBox(item){
+
+    convertTime(time){
+      let dmy = time.split("T")[0];
+      let hms = (time.split("T")[1]).split(".")[0];
+      return hms+ " / " +dmy;
+    },
+
+    async openChatBox(item){
+      
+      
+      this.contactUser = item;
+      let data = await this.$axios.$post('/api/getMeseage',{
+                user_1 : this.$store.state.currentUser._id,
+                user_2 : item._id,
+      });
+      if(data.result == "successed" )
+      {
+           this.dialogMsg = data.info;
+      }
+     
+
+      //this.contactUser = item;
       this.dialog = true;
-      this.contactUser = item.ext_displayName;
       //alert(item.ext_displayName);
-    }
+    },
+    async sendMsg(item){
+      //let currentUserId =  this.$store.state.currentUser._id;
+      this.contactUser = item;
+      let data = await this.$axios.$post('/api/sendMessage',{
+                from_UserId : this.$store.state.currentUser._id,
+                to_UserId : item._id,
+                type : "text",
+                text : this.myMsg,
+      });
+      //this.dialogMsg = data.info;
+      this.dialog = false;
+      this.myMsg = '';
+    },
+
   }
 }
 </script>

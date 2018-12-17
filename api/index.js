@@ -6,6 +6,8 @@ const { mongoose } = require('./db/mongoose');
 const { UserInfo } = require("./models/userInfo");
 const { FriendInfo } = require("./models/friendInfo");
 const { FriendReq } = require("./models/friendReq");
+const { FriendList } = require("./models/friendList");
+const { Message } = require("./models/message");
 
 app.post('/app_login',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
@@ -135,7 +137,7 @@ app.post('/getAvailableUser', (req,res)=>{
 })
 
 
-app.post('/getRequestedListById', async(req,res)=>{
+app.post('/getRequestedListById_V1', async(req,res)=>{
     try{
         let reqRelateUser = await FriendReq.find(
             { $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
@@ -193,22 +195,152 @@ app.post('/getRequestedListById', async(req,res)=>{
         
         let friendList = await UserInfo.find(
             { _id: { $in: storeMyFriendList }});
-        
-                /*
-        //find other user that current user is interested.
-        let friendReq = await UserInfo.find(
-            { _id: { $in: storeReqFromOtherUser }});
-        */   
-            
         res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq , friendList}});           
-
+        
     }
     catch(e)
     { res.send({result :"failed", msg: "Error", info: {e}}); }
     
 })
 
+app.post('/getRequestedListById', async(req,res)=>{
+    try{
 
+        //find my friend
+        let _myFriendList = await FriendList.find(
+            { $or: [ { 'user_1_id': req.body.currentUserId }, 
+                     { 'user_2_id': req.body.currentUserId} ]  });
+        let _myFriend_arr =  [];
+        for(let i = 0; i< _myFriendList.length; i++)
+        {
+            if(_myFriendList[i].user_1_id == req.body.currentUserId)
+            {
+                _myFriend_arr.push( _myFriendList[i].user_2_id ); 
+            }else{ _myFriend_arr.push( _myFriendList[i].user_1_id );  }
+        }
+        let friendList = await UserInfo.find(
+            { _id: { $in: _myFriend_arr }});
+
+            
+        let reqRelateUser = await FriendReq.find(
+            { $or: [ { 'reqFromId': new ObjectId(req.body.currentUserId) }, 
+                    { 'reqToId': new ObjectId(req.body.currentUserId) } ]  });
+        // storeAllReqList ignore whether users are interested or not            
+        let storeAllReqList = [req.body.currentUserId];    
+        let storeReqFromOtherUser =  [];    
+        let storeMyReqList =  [];
+        let storeRejectList =  [];
+          
+        for(let i = 0; i< reqRelateUser.length; i++)
+        {
+            if(reqRelateUser[i].reqFromId == req.body.currentUserId)
+            {  storeAllReqList.push( reqRelateUser[i].reqToId ); 
+                if(reqRelateUser[i].isInterested == true)
+                {
+                    //storeMyReqList.push( reqRelateUser[i].reqToId ); 
+                }
+                else{
+                    storeRejectList.push( reqRelateUser[i].reqToId ); 
+                }
+                
+            }
+            else
+            {  storeAllReqList.push( reqRelateUser[i].reqFromId );
+                if(reqRelateUser[i].isInterested == true)
+                {
+                    storeReqFromOtherUser.push( reqRelateUser[i].reqFromId );
+                }
+                else{
+                    storeRejectList.push( reqRelateUser[i].reqFromId ); 
+                }
+            } 
+        }
+        
+        //let storeMyFriendList =  [];    
+        //find Isinterested intersection between users.
+        /*
+        let storeMyFriendList = storeMyReqList.filter(function(n) {
+            return storeReqFromOtherUser.indexOf(n) > -1;
+          });
+        */
+        let storeFriendReq = storeReqFromOtherUser.filter(function(n) {
+            return storeRejectList.indexOf(n) === -1;
+          });
+    
+          
+        let availableUser = await UserInfo.find(
+            { _id: { $nin: storeAllReqList }});
+        
+        let friendReq = await UserInfo.find(
+                //{ _id: { $in: storeFriendReq }}
+                { $and: [ { _id: { $in: storeFriendReq } }, 
+                    { _id: { $nin: _myFriend_arr } } ] 
+                });
+        
+                /*
+        let friendList = await UserInfo.find(
+            { _id: { $in: storeMyFriendList }});
+            */
+        res.send({result :"successed", msg: "No Error", info: {availableUser, friendReq , friendList}});           
+        
+    }
+    catch(e)
+    { res.send({result :"failed", msg: "Error", info: {e}}); }
+    
+})
+
+app.post('/sendMessage', async (req,res)=>{
+
+    let newMsg = new Message({
+        from_UserId : req.body.from_UserId,
+        to_UserId : req.body.to_UserId,
+        type : req.body.type,
+        text : req.body.text,
+        reqDate : Date.now()
+    });
+
+    try
+    {
+        let msgRes = await newMsg.save();
+        res.send({result :"successed", info : msgRes} );
+    }
+    catch(err)
+    {
+        res.send({result :"failed"});
+    }
+    
+    
+})
+
+
+app.post('/getMeseage', async (req,res)=>{
+    try
+    {
+        let allMsg = await Message.find({ 
+            $or : [
+                {
+                    $and: [ 
+                    { 'from_UserId': req.body.user_1 }, 
+                    { 'to_UserId': req.body.user_2 } 
+                    ]
+                },
+                {
+                    $and: [ 
+                    { 'from_UserId': req.body.user_2 }, 
+                    { 'to_UserId': req.body.user_1 } 
+                    ]
+                },
+                ]
+        });
+        res.send({result :"successed",info : allMsg});
+    }
+    catch(err)
+    {
+        res.send({result :"failed"});
+    }
+    
+    
+})
 
 app.post('/makeFriendReq', (req,res)=>{
 
@@ -218,20 +350,66 @@ app.post('/makeFriendReq', (req,res)=>{
         isInterested : req.body.isInterested,
         reqDate : Date.now()
     });
-
     newReq.save(function (err) {
         res.send({result :"successed"});
     });
+    
 })
 
-app.post('/clearAllReq', (req,res)=>{
+app.post('/creFriend', async (req,res)=>{
 
-    FriendReq.remove({}, function (err) {
-        if(err)
-        {   res.send({result :"failed"}); }
-        else 
-        {   res.send({result :"successed"}); }
-    });
+    try{
+        //create Req 
+        let newReq = await new FriendReq({
+            reqFromId : req.body.reqFromId,
+            reqToId : req.body.reqToId,
+            isInterested : req.body.isInterested,
+            reqDate : Date.now()
+        });
+        await newReq.save();
+
+        //create new Friend List
+        let newData = {
+            user_1_id : req.body.reqFromId,
+            user_2_id : req.body.reqToId,
+            lastUpdate : Date.now()
+        }
+        let _newFriendList = await FriendList.findOneAndUpdate(
+        {  //search for existed friend list then update it.
+            $or : [
+                {
+                    $and: [ 
+                    { 'user_1_id': req.body.reqFromId }, 
+                    { 'user_2_id': req.body.reqToId } 
+                    ]
+                },
+                {
+                    $and: [ 
+                    { 'user_1_id': req.body.reqToId }, 
+                    { 'user_2_id': req.body.reqFromId } 
+                    ]
+                },
+        ]}, newData, {upsert:true, new: true});
+          res.send({result :"successed"});
+    }catch(err){
+         res.send(err);
+    }
+
+})
+
+app.post('/clearAllReq', async (req,res)=>{
+
+    try{
+        await FriendReq.remove({});
+        await FriendList.remove({});
+        await Message.remove({});
+        res.send({result :"successed"});
+    }
+    catch(err)
+    {
+        res.send(err);
+    }
+   
 });
 
 app.get('/testAddFriendReq', async (req,res)=>{

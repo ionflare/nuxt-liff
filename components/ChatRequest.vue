@@ -72,7 +72,7 @@ export default
   methods:{
       async acceptReq(otherUser){
            
-            let data = await this.$axios.$post('/api/makeFriendReq',{
+            let data = await this.$axios.$post('/api/creFriend',{
                 reqFromId : this.$store.state.currentUser._id,
                 reqToId : otherUser._id,
                 isInterested : true
@@ -86,8 +86,6 @@ export default
             else{
                 alert("Error occured while getting other user profile");  
             }
-        
-         
       },
       async rejectReq(otherUser){
             let data = await this.$axios.$post('/api/makeFriendReq',{
