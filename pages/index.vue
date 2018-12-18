@@ -27,7 +27,13 @@
                 <div>bla bla bla <br>Some advertisment here</div>
            
           </v-card-title>
-            <v-btn  color="primary" dark  @click="onWebLogin()"> --> GO TO DATING APP <-- </v-btn>
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+            </fb:login-button>
+            <div id="status"></div>
+          <div id="fb-root"></div>
+            
+              <br>
+            <v-btn  color="green" dark  @click="onWebLogin()">  Login using Line Account  </v-btn>
             <br>
             If you cannot open button above, scan Qr code below then Select Dating App (nuxt-liff).
             <br>
@@ -35,6 +41,7 @@
             <br>
             Test Zone
              <br>
+            
             <v-btn  color="green" dark  @click="DummyLogin(0)">(Test) Dummy 1 Login</v-btn>
             <v-btn  color="green" dark  @click="DummyLogin(1)">(Test) Dummy 2 Login</v-btn>
             <v-btn  color="green" dark  @click="DummyLogin(2)">(Test) Dummy 3 Login</v-btn>
@@ -47,10 +54,9 @@
         </v-flex>
          
       </v-layout>
-      
 
     </v-container>
-    
+ 
     <div style="display: none;">
       <div id="profileinfo">
        location = <div id="latitude"></div><div id="longitude"></div>
@@ -119,7 +125,7 @@ export default {
     script: [
    
       {  src: '/liff-starter.js'},
-      //{  src: '/geoip.js'},
+      {  src: '/facebookSDK.js'},
     ]
   },
   
@@ -132,6 +138,9 @@ export default {
     },
     
     methods : {
+        FBLogin(){
+            
+        },
         async ClearAllReq(){
             let data = await this.$axios.$post('/api/clearAllReq');
             alert(data.result);
