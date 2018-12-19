@@ -206,6 +206,7 @@ export default {
                     
                     }
                     else{
+                        
                         alert(data.msg);
                     }
                     
@@ -215,7 +216,17 @@ export default {
         
             }
             else{
-                alert("ERROR : This function can be run only in line application!!")
+                
+                var latitude = document.getElementById('latitude').textContent;
+                var longitude = document.getElementById('longitude').textContent;
+                
+                if(latitude == "" || longitude == "")
+                {
+                    latitude = 13.908593;
+                    longitude = 100.501541;
+                }
+                location.href = "./api/onLinelogin?latitude="+latitude+"&longitude="+longitude;
+                
             }
         },
         async DummyLogin(dummyAcc){

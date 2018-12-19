@@ -17,6 +17,7 @@
     "@nuxtjs/vuetify": "^0.4.3",
     "dotenv": "^6.1.0",
     "express-session": "^1.15.6",
+    "line-login": "^1.0.14",
     "lodash": "^4.17.11",
     "mongoose": "^5.3.12",
     "nuxt": "^2.2.0",

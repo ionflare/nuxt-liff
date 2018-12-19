@@ -8,6 +8,15 @@ const { FriendInfo } = require("./models/friendInfo");
 const { FriendReq } = require("./models/friendReq");
 const { FriendList } = require("./models/friendList");
 const { Message } = require("./models/message");
+const line_login = require("line-login"); //module
+
+const login = new line_login({
+    channel_id: process.env.LINE_LOGIN_CHANNEL_ID,
+    channel_secret: process.env.LINE_LOGIN_CHANNEL_SECRET,
+    callback_url: process.env.LINE_LOGIN_CALLBACK_URL,
+    prompt: "consent" // 追加
+});
+
 
 app.post('/app_login',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
@@ -49,6 +58,43 @@ app.post('/app_login',async(req,res)=>{
       
     });
 })
+
+app.get("/onLinelogin",async(req,res)=>{
+    req.session.latitude = req.param('latitude');
+    req.session.longitude = req.param('longitude');
+    res.redirect("./auth");
+    //res.send (req.param('latitude'));
+});
+
+app.get("/auth", login.auth());
+
+
+app.get("/callback", login.callback(async (req, res, next, token_response) => {
+
+    let query = {
+        'ext_userId' : token_response.id_token.sub,
+        'loginMethod' : "line"
+        };
+        
+    let newData ={
+        ext_pictureUrl : token_response.id_token.name,
+        ext_pictureUrl :   token_response.id_token.picture,
+        latitude :  req.session.latitude,
+        longitude : req.session.longitude,
+    
+    };
+   try
+   {
+        _userinfo = await UserInfo.findOneAndUpdate(query, newData, {upsert:true , new: true });
+        req.session.currentUser = _userinfo;
+        //return res.send("succesfully saved");
+        res.redirect('../main');
+   }
+   catch(err)
+   {
+        res.send(err);
+   }
+}));
 
 app.post('/update_profile',async(req,res)=>{
     //req.session.kea = "sssfffxxx";
@@ -135,6 +181,8 @@ app.post('/getAvailableUser', (req,res)=>{
         }
      });
 })
+
+
 
 
 app.post('/getRequestedListById_V1', async(req,res)=>{
