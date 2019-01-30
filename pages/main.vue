@@ -53,6 +53,8 @@
       </v-tabs>
       
       </v-layout>
+      
+      {{message2}}
     </v-container>
   </v-app>
 </template>
@@ -83,7 +85,13 @@ export default {
   */
   data () {
     return {
-      
+       timer: 25,
+        message2: "",
+        counter: false,
+        interval: null,
+
+
+
       bottomNav: 'profile',
       currentTab : 1,
       //otherUserProfile : ['']
@@ -117,7 +125,26 @@ export default {
       },
       onResize () {
       this.$store.state.windowSize = { x: window.innerWidth, y: window.innerHeight }
-      }
+      },
+      startTimer() {
+            this.interval = setInterval(this.countDown, 1000);
+        },
+        countDown() {
+          var n = this.timer
+            if (!this.counter) {
+                this.counter = true;
+            } else if (n > 0) {
+                n = n - 1
+                this.timer = n
+                this.message2 = "You have " + n + "seconds until refresh page."
+            } else {
+                clearInterval(this.interval);
+                this.counter = false;
+                this.message2 = "Your time is up!";
+                this.timer =  25;
+                location.href ="../";
+            }
+        },
     },
    async asyncData(context){
       let currentUserId = context.store.state.currentUser._id;
@@ -126,6 +153,7 @@ export default {
       context.store.state.requestedList = allUserProf.info.friendReq;
       context.store.state.myFriendList = allUserProf.info.friendList;
 
-  }
+  },
+     
 }
 </script>

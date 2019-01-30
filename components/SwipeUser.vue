@@ -55,7 +55,7 @@
                 <div v-if="FilterFromSetting.length > 1">
                     Found {{FilterFromSetting.length}} Results 
                     <!--*****[ Step header work malfunction when use index = 0
-                    ,in v-for index start at 0 so it need to be modidied a little bit
+                    ,in v-for index start at 0 so it need to be modified a little bit
                     ]*********-->
                 <v-stepper v-model="$store.state.SwipeIdx">
                     <v-stepper-header v-show="false">
@@ -143,48 +143,15 @@
 <script>
 import _ from 'lodash';
 export default {
-  //props: ['description', 'image', 'shopName', 'url', 'color', 'thumbnail']
-  //prop: ['title', 'shopName', 'color']
-  //props: ['e1'],
- /*
-  data: () => ({
-    e1:3,
-    timer: 25,
-    message2: "",
-    counter: false,
-    interval: null,
-    filteredOtherUser : [''],
-  }),
-  */
  data(){
      return {
         e1:1,
-        timer: 25,
-        message2: "",
-        counter: false,
-        interval: null,
+       
         filteredOtherUser : [''],
      }
  },
   methods: {
-        startTimer() {
-            this.interval = setInterval(this.countDown, 1000);
-        },
-        countDown() {
-          var n = this.timer
-            if (!this.counter) {
-                this.counter = true;
-            } else if (n > 0) {
-                n = n - 1
-                this.timer = n
-                this.message2 = "You have " + n + "seconds left."
-            } else {
-                clearInterval(this.interval);
-                this.counter = false;
-                this.message2 = "Your time is up!";
-                this.timer =  25;
-            }
-        },
+     
         async getOtherUserProfile(){
             let currentUserId = this.$store.state.currentUser._id;
             let allUserProf = await this.$axios.$post('/api/getRequestedListById',{ currentUserId : currentUserId});
@@ -270,24 +237,6 @@ export default {
   },
   computed : {
       FilterFromSetting: function(){
-          
-            // requested list will not be shown again
-            /*
-            let res_RequestedList = [];
-            for(let i =0; this.$store.state.otherUserProfile.length; i++)
-            {
-                for(let j =0; this.$store.state.requestedList.length; j++)
-                {
-                    if(this.$store.state.requestedList[j]._id !=  this.$store.state.otherUserProfile[i]._id)
-                    res_RequestedList.push(this.$store.state.otherUserProfile[i]);
-                }
-            }
-            */
-
-
-        
-
-           
             //Filter Gender
             let res_filterGender;
             let search_con = this.$store.state.currentUser.search_gender;

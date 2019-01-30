@@ -3,10 +3,6 @@ import Router from 'vue-router'
 
 const _4c1a71ce = () => import('..\\pages\\main.vue' /* webpackChunkName: "pages_main" */).then(m => m.default || m)
 const _e5b8f1e0 = () => import('..\\pages\\index.1.vue' /* webpackChunkName: "pages_index.1" */).then(m => m.default || m)
-const _137819a2 = () => import('..\\pages\\index_ori3.vue' /* webpackChunkName: "pages_index_ori3" */).then(m => m.default || m)
-const _11275798 = () => import('..\\pages\\index_ori.vue' /* webpackChunkName: "pages_index_ori" */).then(m => m.default || m)
-const _139448a4 = () => import('..\\pages\\index_ori2.vue' /* webpackChunkName: "pages_index_ori2" */).then(m => m.default || m)
-const _133fbb9e = () => import('..\\pages\\index_ori5.vue' /* webpackChunkName: "pages_index_ori5" */).then(m => m.default || m)
 const _18a8a40d = () => import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */).then(m => m.default || m)
 
 Vue.use(Router)
@@ -77,26 +73,6 @@ export function createRouter () {
 			path: "/index.1",
 			component: _e5b8f1e0,
 			name: "index.1"
-		},
-		{
-			path: "/index_ori3",
-			component: _137819a2,
-			name: "index_ori3"
-		},
-		{
-			path: "/index_ori",
-			component: _11275798,
-			name: "index_ori"
-		},
-		{
-			path: "/index_ori2",
-			component: _139448a4,
-			name: "index_ori2"
-		},
-		{
-			path: "/index_ori5",
-			component: _133fbb9e,
-			name: "index_ori5"
 		},
 		{
 			path: "/",

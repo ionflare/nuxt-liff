@@ -71,15 +71,6 @@
 </template>
 <script>
 export default {
-  /*
-    data: () => ({
-     min: 15,
-      max: 80,
-      slider: 40,
-      range: [18, 50],
-      items: ['Male', 'Female', 'All']
-  }),
-  */
   data() {
     return {
       gender_items: ['Male', 'Female', 'All'],
@@ -92,8 +83,6 @@ export default {
       search_distance_max : this.$store.state.currentUser.search_distance_max,
       searchAgeRange: [this.$store.state.currentUser.search_age_min, this.$store.state.currentUser.search_age_max],
       selected_search_gender :  this.$store.state.currentUser.search_gender,
-        //selected_search_age_max : this.$store.state.currentUser.search_age_max,
-        //selected_search_age_min : this.$store.state.currentUser.search_age_min,
     };
   },
 

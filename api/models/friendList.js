@@ -1,11 +1,4 @@
 var mongoose = require('mongoose');
-//var autoIncrement = require ('mongoose-auto-increment');
-//const _ = require("lodash");
-//const validator = require("validator");
-//const bcrypt = require("bcryptjs");
-//const jwt = require("jsonwebtoken");
-
-
 var FriendList_Schema = new mongoose.Schema({
     
     user_1_id: {

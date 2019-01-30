@@ -22,7 +22,6 @@
   
                 <v-list-tile-content>
                   <v-list-tile-title v-html="item.ext_displayName"></v-list-tile-title>
-                  <!--<v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>-->
                 </v-list-tile-content>
                  <v-btn color="green" 
                  fab small dark
@@ -63,10 +62,7 @@ export default
        return _.filter(this.$store.state.requestedList, function(x){
          return x._id != currentUserId;
        });
-       
-      //return this.$store.state.requestedList;
-      //return _.orderBy(this.$store.state.requestedList, function(o) { return new moment(o.date).format('YYYYMMDD'); }, ['desc']);
-      //return _.orderBy(this.$store.state.requestedList, ['reqDate']); 
+    
     }
   },
   methods:{

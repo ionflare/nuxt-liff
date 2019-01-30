@@ -5,9 +5,6 @@ var mongoose = require("mongoose");
 var Message_Schema = new mongoose.Schema({
   //--From sender
   from_UserId: { type: String, require: true },
-  //from_UserId: { type: mongoose.Schema.Types.ObjectId, require: true },
-  // lineuserid: { type: String, required: true }, //r
-  //fromusername: { type: String, required: false },
 
   //--To receiver
   to_UserId: { type: String, require: true },

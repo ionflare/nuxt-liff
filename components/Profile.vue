@@ -62,20 +62,6 @@
         </v-container>
       </v-card>      
       <br>      
-<!--
-userId:
-{{$store.state.currentUser.line_userId}}
-<br>
-latitude:
-{{$store.state.currentUser.latitude}}
-<br>
-longitude:
-{{$store.state.currentUser.longitude}}
-
-age :
-{{$store.state.currentUser.age}}
--->
-
 <br>      
   </div>
 

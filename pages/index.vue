@@ -27,17 +27,11 @@
                 <div>bla bla bla <br>Some advertisment here</div>
            
           </v-card-title>
-          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-            </fb:login-button>
             <div id="status"></div>
           <div id="fb-root"></div>
             
               <br>
             <v-btn  color="green" dark  @click="onWebLogin()">  Login using Line Account  </v-btn>
-            <br>
-            If you cannot open button above, scan Qr code below then Select Dating App (nuxt-liff).
-            <br>
-            <v-img src="https://www.picz.in.th/images/2018/10/11/kupKlb.png"  height="100px" width="100px"></v-img>
             <br>
             Test Zone
              <br>

@@ -19,8 +19,6 @@ const login = new line_login({
 
 
 app.post('/app_login',async(req,res)=>{
-    //req.session.kea = "sssfffxxx";
-    
     let query = {
         'ext_userId' : req.body.currentUser.ext_userId,
         'loginMethod' : req.body.currentUser.loginMethod
@@ -38,16 +36,6 @@ app.post('/app_login',async(req,res)=>{
     if (req.body.currentUser.longitude != "")
     { newData.longitude = req.body.currentUser.longitude;}
     
-    /*
-    let newData = {
-   
-        'ext_displayName' : req.body.currentUser.ext_displayName,
-        'ext_pictureUrl' : req.body.currentUser.ext_pictureUrl,
-        'ext_statusMessege' : req.body.currentUser.ext_statusMessege,
-        'latitude' : req.body.currentUser.latitude,
-        'longitude' : req.body.currentUser.longitude,
-    }
-    */
     UserInfo.findOneAndUpdate(query, newData, {upsert:true ,
         new: true }, function(err, doc){
         if (err) return res.send(500, { error: err });
@@ -63,7 +51,6 @@ app.get("/onLinelogin",async(req,res)=>{
     req.session.latitude = req.param('latitude');
     req.session.longitude = req.param('longitude');
     res.redirect("./auth");
-    //res.send (req.param('latitude'));
 });
 
 app.get("/auth", login.auth());
@@ -87,7 +74,6 @@ app.get("/callback", login.callback(async (req, res, next, token_response) => {
    {
         _userinfo = await UserInfo.findOneAndUpdate(query, newData, {upsert:true , new: true });
         req.session.currentUser = _userinfo;
-        //return res.send("succesfully saved");
         res.redirect('../main');
    }
    catch(err)
@@ -97,7 +83,6 @@ app.get("/callback", login.callback(async (req, res, next, token_response) => {
 }));
 
 app.post('/update_profile',async(req,res)=>{
-    //req.session.kea = "sssfffxxx";
     var query = { '_id': new ObjectId(req.body.currentUser._id) };
     var newData = {
         'ext_displayName' : req.body.currentUser.ext_displayName,
@@ -113,7 +98,6 @@ app.post('/update_profile',async(req,res)=>{
         if (err) return res.send(500, { error: err });
         else{
             req.session.currentUser = doc;
-            //return res.send("succesfully saved");
             res.send({result :"successed", msg: "No Error", info: {doc}});
         }
       
@@ -122,7 +106,6 @@ app.post('/update_profile',async(req,res)=>{
 
 
 app.post('/update_settings',async(req,res)=>{
-    //req.session.kea = "sssfffxxx";
     var query = { '_id': new ObjectId(req.body.currentUser._id) };
     var newData = {
         'search_gender' : req.body.currentUser.search_gender,
@@ -135,7 +118,6 @@ app.post('/update_settings',async(req,res)=>{
         if (err) return res.send(500, { error: err });
         else{
             req.session.currentUser = doc;
-            //return res.send("succesfully saved");
             res.send({result :"successed", msg: "No Error", info: {doc}});
         }
       
@@ -304,13 +286,6 @@ app.post('/getRequestedListById', async(req,res)=>{
             } 
         }
         
-        //let storeMyFriendList =  [];    
-        //find Isinterested intersection between users.
-        /*
-        let storeMyFriendList = storeMyReqList.filter(function(n) {
-            return storeReqFromOtherUser.indexOf(n) > -1;
-          });
-        */
         let storeFriendReq = storeReqFromOtherUser.filter(function(n) {
             return storeRejectList.indexOf(n) === -1;
           });
@@ -515,26 +490,6 @@ app.get('/testAddFriendReq', async (req,res)=>{
         }
       
         });
-
-
-        /*
-
-        for(var i = 0;i< dummyAccount.count;i++)
-        {  if(req.params.userid == dummyAccount[i])
-            { continue; }
-            var query = {};
-            var newReq = await new FriendReq({
-                reqFromId : dummyAccount[i],
-                reqToId :  req.params.userid,
-                isInterested : true,
-                reqDate : Date.now()
-            });
-            await newReq.save();
-        }
-     
-      
-        res.send("Dummy accounts have sent Friend Req to userId : "+ req.params.userid);
-        */
     }catch(e){
         res.send("Am error occured while pushing req!!");
     }
